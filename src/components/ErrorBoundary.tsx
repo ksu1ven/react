@@ -23,7 +23,9 @@ class ErrorBoundary extends React.Component<Props, State> {
     if (this.state.hasError) {
       return (
         <main className="error-occured min-h-screen grid place-content-center">
-          <h2 className="text-3xl">Hello, I'm Error! I was catched :&#40;</h2>
+          <h2 className="text-3xl">
+            Hello, I&apos;m Error! I was catched :&#40;
+          </h2>
           <button
             type="button"
             className="w-fit bg-lime-700 py-3 px-10 mt-10 rounded text-white font-extrabold m-auto"
