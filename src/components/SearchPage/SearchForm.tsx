@@ -7,7 +7,14 @@ interface Props {
 }
 
 class SearchForm extends Component<Props> {
+  state = {
+    errorOccured: false,
+  };
+
   render() {
+    if (this.state.errorOccured) {
+      throw new Error("Hello, I'm Error!");
+    }
     return (
       <form
         action="#"
@@ -17,6 +24,16 @@ class SearchForm extends Component<Props> {
           this.props.search();
         }}
       >
+        <button
+          type="button"
+          className="w-1/5 bg-lime-700 p-3 rounded text-white font-extrabold"
+          onClick={() => {
+            this.setState({ errorOccured: true });
+          }}
+        >
+          Error
+        </button>
+
         <input
           defaultValue={this.props.searchValue}
           type="text"
