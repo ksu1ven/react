@@ -28,17 +28,17 @@ class SearchPage extends Component {
   search = async () => {
     this.setState({ loading: true });
     localStorage.setItem('searchValue', this.state.searchValue);
-    const pageAddress = `https://stapi.co/api/v1/rest/animal/search?pageNumber=${this.state.pageNumber}&pageSize=${SearchPage.pageSize}`;
+    const url = `https://stapi.co/api/v1/rest/animal/search?pageNumber=${this.state.pageNumber}&pageSize=${SearchPage.pageSize}`;
     try {
       const response = this.state.searchValue
-        ? await fetch(pageAddress, {
+        ? await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `${encodeURIComponent('name')}=${encodeURIComponent(
               this.state.searchValue
             )}`,
           })
-        : await fetch(pageAddress, {
+        : await fetch(url, {
             method: 'GET',
           });
 
@@ -65,7 +65,11 @@ class SearchPage extends Component {
             />
           </section>
           <section className="search-results grow">
-            <SearchResults searchResultsArray={this.state.searchResultsArray} />
+            {!this.state.loading && (
+              <SearchResults
+                searchResultsArray={this.state.searchResultsArray}
+              />
+            )}
           </section>
         </main>
         {this.state.loading && <Loader />}
