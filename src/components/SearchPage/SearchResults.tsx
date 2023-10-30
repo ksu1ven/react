@@ -19,7 +19,7 @@ function SearchResults(props: Props) {
   }
 
   return (
-    <div className="w-1/3 m-auto py-20 flex flex-col gap-5 ">
+    <div className="w-1/3 m-auto mt-20 mb-10 flex flex-col gap-5 ">
       {props.searchResultsArray.length ? (
         props.searchResultsArray.map((el) => {
           const animalDescription = checkDescription(el);

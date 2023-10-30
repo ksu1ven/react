@@ -1,5 +1,6 @@
 import SearchForm from './SearchForm';
 import SearchResults from './SearchResults';
+import Pagination from './Pagination';
 import Loader from '../Loader';
 import { apiResponse } from '../../utils/types';
 import { useEffect, useState } from 'react';
@@ -12,8 +13,8 @@ function SearchPage() {
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem('searchValue') || ''
   );
-  const pageNumber = 0;
-  // const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [searchResultsArray, setSearchResultsArray] = useState<
     Readonly<Animal[]>
   >([]);
@@ -29,6 +30,7 @@ function SearchPage() {
   }
 
   async function search() {
+    console.log('search');
     setLoading(true);
     localStorage.setItem('searchValue', searchValue);
     const url = `https://stapi.co/api/v1/rest/animal/search?pageNumber=${pageNumber}&pageSize=${pageSize}`;
@@ -46,6 +48,8 @@ function SearchPage() {
           });
 
       const json: apiResponse = await response.json();
+      console.log(response);
+      setTotalPages(json.page.totalPages);
       setLoading(false);
       setSearchResultsArray(json.animals);
     } catch {
@@ -68,7 +72,14 @@ function SearchPage() {
         </section>
         <section className="search-results grow">
           {!loading && (
-            <SearchResults searchResultsArray={searchResultsArray} />
+            <>
+              <SearchResults searchResultsArray={searchResultsArray} />
+              <Pagination
+                pageNumber={pageNumber}
+                setPageNumber={setPageNumber}
+                totalPages={totalPages}
+              />
+            </>
           )}
         </section>
       </main>
