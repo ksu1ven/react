@@ -1,41 +1,44 @@
-import { Component } from 'react';
 import SearchForm from './SearchForm';
 import SearchResults from './SearchResults';
 import Loader from '../Loader';
 import { apiResponse } from '../../utils/types';
+import { useEffect, useState } from 'react';
+import { Animal } from '../../utils/types';
 
-class SearchPage extends Component {
-  static pageSize = 10;
+function SearchPage() {
+  const pageSize = 10;
 
-  state = {
-    loading: false,
-    searchValue: localStorage.getItem('searchValue') || '',
-    pageNumber: 0,
-    searchResultsArray: [],
-    errorOccured: false,
-  };
+  const [loading, setLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState(
+    localStorage.getItem('searchValue') || ''
+  );
+  const pageNumber = 0;
+  // const [pageNumber, setPageNumber] = useState(0);
+  const [searchResultsArray, setSearchResultsArray] = useState<
+    Readonly<Animal[]>
+  >([]);
+  const [errorOccured, setErrorOccured] = useState(false);
 
-  componentDidMount() {
-    this.search();
+  useEffect(() => {
+    search();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function changeSearchValue(newValue: string) {
+    setSearchValue(newValue);
   }
 
-  changeSearchValue = (newValue: string) => {
-    this.setState({
-      searchValue: newValue,
-    });
-  };
-
-  search = async () => {
-    this.setState({ loading: true });
-    localStorage.setItem('searchValue', this.state.searchValue);
-    const url = `https://stapi.co/api/v1/rest/animal/search?pageNumber=${this.state.pageNumber}&pageSize=${SearchPage.pageSize}`;
+  async function search() {
+    setLoading(true);
+    localStorage.setItem('searchValue', searchValue);
+    const url = `https://stapi.co/api/v1/rest/animal/search?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     try {
-      const response = this.state.searchValue
+      const response = searchValue
         ? await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `${encodeURIComponent('name')}=${encodeURIComponent(
-              this.state.searchValue
+              searchValue
             )}`,
           })
         : await fetch(url, {
@@ -43,39 +46,35 @@ class SearchPage extends Component {
           });
 
       const json: apiResponse = await response.json();
-      this.setState({ loading: false });
-      this.setState({ searchResultsArray: json.animals });
+      setLoading(false);
+      setSearchResultsArray(json.animals);
     } catch {
-      this.setState({ errorOccured: true });
+      setErrorOccured(true);
     }
-  };
-
-  render() {
-    if (this.state.errorOccured) {
-      throw new Error("Hello, I'm Error with server!");
-    }
-    return (
-      <>
-        <main className="min-h-screen flex flex-col">
-          <section className="bg-lime-200 py-10">
-            <SearchForm
-              searchValue={this.state.searchValue}
-              changeSearchValue={this.changeSearchValue}
-              search={this.search}
-            />
-          </section>
-          <section className="search-results grow">
-            {!this.state.loading && (
-              <SearchResults
-                searchResultsArray={this.state.searchResultsArray}
-              />
-            )}
-          </section>
-        </main>
-        {this.state.loading && <Loader />}
-      </>
-    );
   }
+
+  if (errorOccured) {
+    throw new Error("Hello, I'm Error with server!");
+  }
+  return (
+    <>
+      <main className="min-h-screen flex flex-col">
+        <section className="bg-lime-200 py-10">
+          <SearchForm
+            searchValue={searchValue}
+            changeSearchValue={changeSearchValue}
+            search={search}
+          />
+        </section>
+        <section className="search-results grow">
+          {!loading && (
+            <SearchResults searchResultsArray={searchResultsArray} />
+          )}
+        </section>
+      </main>
+      {loading && <Loader />}
+    </>
+  );
 }
 
 export default SearchPage;
