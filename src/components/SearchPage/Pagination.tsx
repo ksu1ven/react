@@ -1,5 +1,3 @@
-import { useRef } from 'react';
-
 interface Props {
   pageNumber: number;
   setPageNumber: React.Dispatch<React.SetStateAction<number>>;
