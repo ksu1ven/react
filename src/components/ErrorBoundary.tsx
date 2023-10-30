@@ -8,7 +8,11 @@ interface Props {
 interface State {
   hasError: boolean;
 }
-class ErrorBoundary extends React.Component<Props, State> {
+class ErrorBoundary extends React.Component<
+  Props,
+  State,
+  Record<string, never>
+> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };

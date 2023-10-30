@@ -5,8 +5,11 @@ interface Props {
   changeSearchValue: (newValue: string) => void;
   search: () => void;
 }
+interface State {
+  errorOccured: boolean;
+}
 
-class SearchForm extends Component<Props> {
+class SearchForm extends Component<Props, State, Record<string, never>> {
   state = {
     errorOccured: false,
   };

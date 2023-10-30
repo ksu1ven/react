@@ -6,7 +6,11 @@ interface Props {
   searchResultsArray: Readonly<Animal[]>;
 }
 
-class SearchResults extends Component<Props> {
+class SearchResults extends Component<
+  Props,
+  Record<string, never>,
+  Record<string, never>
+> {
   checkDescription(animal: Animal) {
     const descriptionArr: string[] = [];
     Object.entries(animal).forEach((el) => {

@@ -3,8 +3,20 @@ import SearchForm from './SearchForm';
 import SearchResults from './SearchResults';
 import Loader from '../Loader';
 import { apiResponse } from '../../utils/types';
+import { Animal } from '../../utils/types';
 
-class SearchPage extends Component {
+interface State {
+  loading: boolean;
+  searchValue: string;
+  pageNumber: number;
+  searchResultsArray: Readonly<Animal[]>;
+  errorOccured: boolean;
+}
+class SearchPage extends Component<
+  Record<string, never>,
+  State,
+  Record<string, never>
+> {
   static pageSize = 10;
 
   state = {
