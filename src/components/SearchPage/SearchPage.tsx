@@ -13,24 +13,31 @@ function SearchPage() {
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem('searchValue') || ''
   );
+
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [paginationButtonsValue, setPaginationButtonsValue] = useState([
+    1, 2, 3,
+  ]);
+
   const [searchResultsArray, setSearchResultsArray] = useState<
     Readonly<Animal[]>
   >([]);
   const [errorOccured, setErrorOccured] = useState(false);
 
   useEffect(() => {
+    console.log('юз');
     search();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pageNumber]);
 
   function changeSearchValue(newValue: string) {
     setSearchValue(newValue);
   }
 
   async function search() {
-    console.log('search');
+    console.log(pageNumber);
+
     setLoading(true);
     localStorage.setItem('searchValue', searchValue);
     const url = `https://stapi.co/api/v1/rest/animal/search?pageNumber=${pageNumber}&pageSize=${pageSize}`;
@@ -48,7 +55,6 @@ function SearchPage() {
           });
 
       const json: apiResponse = await response.json();
-      console.log(response);
       setTotalPages(json.page.totalPages);
       setLoading(false);
       setSearchResultsArray(json.animals);
@@ -67,6 +73,9 @@ function SearchPage() {
           <SearchForm
             searchValue={searchValue}
             changeSearchValue={changeSearchValue}
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+            setPaginationButtonsValue={setPaginationButtonsValue}
             search={search}
           />
         </section>
@@ -78,6 +87,8 @@ function SearchPage() {
                 pageNumber={pageNumber}
                 setPageNumber={setPageNumber}
                 totalPages={totalPages}
+                paginationButtonsValue={paginationButtonsValue}
+                setPaginationButtonsValue={setPaginationButtonsValue}
               />
             </>
           )}

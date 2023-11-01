@@ -3,10 +3,21 @@ import { useState } from 'react';
 interface Props {
   searchValue: string;
   changeSearchValue: (newValue: string) => void;
+  pageNumber: number;
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+  setPaginationButtonsValue: React.Dispatch<React.SetStateAction<number[]>>;
   search: () => void;
 }
 
 function SearchForm(props: Props) {
+  const {
+    searchValue,
+    changeSearchValue,
+    pageNumber,
+    setPageNumber,
+    setPaginationButtonsValue,
+    search,
+  } = props;
   const [errorOccured, setErrorOccured] = useState(false);
 
   if (errorOccured) {
@@ -18,7 +29,9 @@ function SearchForm(props: Props) {
       className="w-3/5 flex justify-center m-auto gap-x-10 rounded"
       onSubmit={(e) => {
         e.preventDefault();
-        props.search();
+        setPaginationButtonsValue([1, 2, 3]);
+        if (pageNumber) setPageNumber(0);
+        else search();
       }}
     >
       <button
@@ -32,14 +45,14 @@ function SearchForm(props: Props) {
       </button>
 
       <input
-        defaultValue={props.searchValue}
+        defaultValue={searchValue}
         type="text"
         name="search"
         id="search"
         className="w-1/3 p-3"
         onChange={(e) => {
           e.target.value = e.target.value.trim();
-          props.changeSearchValue(e.target.value);
+          changeSearchValue(e.target.value);
         }}
       />
       <button
