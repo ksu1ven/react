@@ -5,16 +5,16 @@ import Loader from '../Loader';
 import { apiResponse } from '../../utils/types';
 import { useEffect, useState } from 'react';
 import { Animal } from '../../utils/types';
+import SelectLimit from './Select';
 
 function SearchPage() {
-  const pageSize = 10;
-
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState(
     localStorage.getItem('searchValue') || ''
   );
 
   const [pageNumber, setPageNumber] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
   const [paginationButtonsValue, setPaginationButtonsValue] = useState([
     1, 2, 3,
@@ -29,7 +29,7 @@ function SearchPage() {
     console.log('юз');
     search();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageNumber]);
+  }, [pageNumber, pageSize]);
 
   function changeSearchValue(newValue: string) {
     setSearchValue(newValue);
@@ -37,6 +37,7 @@ function SearchPage() {
 
   async function search() {
     console.log(pageNumber);
+    console.log(pageSize);
 
     setLoading(true);
     localStorage.setItem('searchValue', searchValue);
@@ -82,6 +83,13 @@ function SearchPage() {
         <section className="search-results grow">
           {!loading && (
             <>
+              <SelectLimit
+                pageSize={pageSize}
+                setPageNumber={setPageNumber}
+                setPageSize={setPageSize}
+                setPaginationButtonsValue={setPaginationButtonsValue}
+              />
+
               <SearchResults searchResultsArray={searchResultsArray} />
               <Pagination
                 pageNumber={pageNumber}
