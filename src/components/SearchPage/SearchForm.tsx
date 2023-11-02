@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { SetURLSearchParams } from 'react-router-dom';
+import { updateQueryParams } from '../../utils/helpFunctions';
 
 interface Props {
   searchValue: string;
@@ -7,6 +9,8 @@ interface Props {
   setPageNumber: React.Dispatch<React.SetStateAction<number>>;
   setPaginationButtonsValue: React.Dispatch<React.SetStateAction<number[]>>;
   search: () => void;
+  params: URLSearchParams;
+  setParams: SetURLSearchParams;
 }
 
 function SearchForm(props: Props) {
@@ -17,6 +21,8 @@ function SearchForm(props: Props) {
     setPageNumber,
     setPaginationButtonsValue,
     search,
+    params,
+    setParams,
   } = props;
   const [errorOccured, setErrorOccured] = useState(false);
 
@@ -30,6 +36,7 @@ function SearchForm(props: Props) {
       onSubmit={(e) => {
         e.preventDefault();
         setPaginationButtonsValue([1, 2, 3]);
+        setParams(updateQueryParams(params, 'search', ''));
         if (pageNumber) setPageNumber(0);
         else search();
       }}

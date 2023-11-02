@@ -1,9 +1,14 @@
+import { SetURLSearchParams } from 'react-router-dom';
+import { updateQueryParams } from '../../utils/helpFunctions';
+
 interface Props {
   pageNumber: number;
   setPageNumber: React.Dispatch<React.SetStateAction<number>>;
   totalPages: number;
   paginationButtonsValue: number[];
   setPaginationButtonsValue: React.Dispatch<React.SetStateAction<number[]>>;
+  params: URLSearchParams;
+  setParams: SetURLSearchParams;
 }
 
 function Pagination(props: Props) {
@@ -13,6 +18,8 @@ function Pagination(props: Props) {
     totalPages,
     paginationButtonsValue,
     setPaginationButtonsValue,
+    params,
+    setParams,
   } = props;
 
   function changePaginationButtonsValue() {
@@ -31,11 +38,11 @@ function Pagination(props: Props) {
     setPaginationButtonsValue(
       paginationButtonsValue.map((el) => el + increaseNumber)
     );
-    setPageNumber(
+    const newPageNumber =
       paginationButtonsValue[paginationButtonsValue.length - 1] +
-        increaseNumber -
-        1
-    );
+      increaseNumber;
+    setParams(updateQueryParams(params, 'page', newPageNumber.toString()));
+    setPageNumber(newPageNumber - 1);
   }
 
   function nextPrevButtons(direction: 'next' | 'prev') {
@@ -49,13 +56,11 @@ function Pagination(props: Props) {
       const changedArr = paginationButtonsValue.map(
         (el) => el + increaseDecreaseNumber
       );
-
       setPaginationButtonsValue(changedArr);
-      setPageNumber(
-        direction == 'next'
-          ? changedArr[changedArr.length - 1] - 1
-          : changedArr[0] - 1
-      );
+      const newPageNumber =
+        direction == 'next' ? changedArr[changedArr.length - 1] : changedArr[0];
+      setParams(updateQueryParams(params, 'page', newPageNumber.toString()));
+      setPageNumber(newPageNumber - 1);
     }
   }
 
@@ -78,6 +83,7 @@ function Pagination(props: Props) {
                   : 'w-14 h-14 bg-lime-700 p-3 rounded-full text-white font-extrabold'
               }
               onClick={() => {
+                setParams(updateQueryParams(params, 'page', value.toString()));
                 setPageNumber(value - 1);
               }}
             >
@@ -104,12 +110,15 @@ function Pagination(props: Props) {
             : 'w-14 h-14 bg-lime-700 p-3 rounded-full text-white font-extrabold'
         }
         onClick={() => {
-          setPaginationButtonsValue(
-            paginationButtonsValue.map(
-              (el, ind) =>
-                totalPages - paginationButtonsValue.length + ind + el - el
-            )
-          );
+          console.log('clicktotal');
+          if (totalPages > paginationButtonsValue.length)
+            setPaginationButtonsValue(
+              paginationButtonsValue.map(
+                (el, ind) =>
+                  totalPages - paginationButtonsValue.length + ind + el - el
+              )
+            );
+          setParams(updateQueryParams(params, 'page', totalPages.toString()));
           setPageNumber(totalPages - 1);
         }}
       >

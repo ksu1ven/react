@@ -1,12 +1,22 @@
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from 'react-router-dom';
+
 import SearchPage from './components/SearchPage/SearchPage';
-import ErrorBoundary from './components/ErrorBoundary';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<SearchPage />}>
+      {/* <Route path="dashboard" element={<Dashboard />} /> */}
+    </Route>
+  )
+);
 
 function App() {
-  return (
-    <ErrorBoundary>
-      <SearchPage />
-    </ErrorBoundary>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
