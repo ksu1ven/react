@@ -22,7 +22,7 @@ class ErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <main className="error-occured min-h-screen grid place-content-center">
+        <main className="error-occured min-h-screen grid place-content-center grow">
           <h2 className="text-3xl">
             Hello, I&apos;m Error! I was catched :&#40;
           </h2>

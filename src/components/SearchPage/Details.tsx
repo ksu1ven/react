@@ -1,28 +1,25 @@
 import { useSearchParams, useLoaderData } from 'react-router-dom';
 import Loader from '../Loader';
 import { Animal, apiResponse } from '../../utils/types';
-import { useState } from 'react';
 import { updateQueryParams } from '../../utils/helpFunctions';
 
 function Details() {
   const [params, setParams] = useSearchParams();
-  const [isLoading] = useState(false);
   const animal = useLoaderData() as Animal | null;
-  console.log(animal);
 
   return params.has('details') ? (
     <aside className="relative w-1/3 bg-lime-700 text-white flex flex-col pt-40 items-center gap-6">
-      {!isLoading ? (
-        <>
-          <button
-            className="absolute top-14 right-14 flex items-center justify-center w-16 h-16 bg-lime-300 text-4xl p-3 rounded-full"
-            onClick={() => {
-              setParams(updateQueryParams(params, 'details', ''));
-            }}
-          >
-            X
-          </button>
-          <h1 className="text-5xl font-extrabold text-lime-300">
+      <button
+        className="absolute top-14 right-14 flex items-center justify-center w-16 h-16 bg-lime-300 text-4xl p-3 rounded-full"
+        onClick={() => {
+          setParams(updateQueryParams(params, 'details', ''));
+        }}
+      >
+        X
+      </button>
+      {animal ? (
+        <div>
+          <h1 className="text-5xl font-extrabold text-lime-300 mb-10">
             {animal?.name}
           </h1>
           <ul className="text-3xl font-extrabold">
@@ -32,7 +29,7 @@ function Details() {
             <li>EarthInsect: {animal?.earthInsect ? 'Yes' : 'No'}</li>
             <li>Feline: {animal?.feline ? 'Yes' : 'No'}</li>
           </ul>
-        </>
+        </div>
       ) : (
         <Loader />
       )}

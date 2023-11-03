@@ -19,6 +19,7 @@ function SelectLimit(props: Props) {
     params,
     setParams,
   } = props;
+  const optionValues = [5, 10, 20, 50, 100];
 
   return (
     <label className="flex justify-end mr-32 font-extrabold text-xl">
@@ -35,11 +36,11 @@ function SelectLimit(props: Props) {
           setPaginationButtonsValue([1, 2, 3]);
         }}
       >
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
+        {optionValues.map((el) => (
+          <option value={el} key={el}>
+            {el}
+          </option>
+        ))}
       </select>
     </label>
   );

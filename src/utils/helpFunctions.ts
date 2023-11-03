@@ -19,7 +19,5 @@ export function updateQueryParams(
         obj[newKey] = newValue;
       }
   }
-  console.log(obj);
-
   return obj;
 }

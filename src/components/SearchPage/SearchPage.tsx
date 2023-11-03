@@ -12,6 +12,7 @@ import SelectLimit from './Select';
 
 function SearchPage() {
   const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState(
@@ -27,17 +28,12 @@ function SearchPage() {
       ? [1, 2, 3].map((el, ind) => pageNumber + ind - 1 + el - el)
       : [1, 2, 3]
   );
-
-  const navigate = useNavigate();
-
   const [searchResultsArray, setSearchResultsArray] = useState<
     Readonly<Animal[]>
   >([]);
   const [errorOccured, setErrorOccured] = useState(false);
 
   useEffect(() => {
-    console.log('юз');
-
     search();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue, pageNumber, pageSize]);
@@ -47,10 +43,6 @@ function SearchPage() {
   }, [navigate, params]);
 
   async function search() {
-    console.log(pageNumber);
-    console.log(pageSize);
-    console.log(params);
-
     setLoading(true);
     localStorage.setItem('searchValue', searchValue);
     const url = `https://stapi.co/api/v1/rest/animal/search?pageNumber=${pageNumber}&pageSize=${pageSize}`;
@@ -81,13 +73,7 @@ function SearchPage() {
   }
   return (
     <ErrorBoundary>
-      <main
-        className="relative min-h-screen flex flex-col grow"
-        onClick={() => {
-          if (params.has('details'))
-            setParams(updateQueryParams(params, 'details', ''));
-        }}
-      >
+      <main className="relative min-h-screen flex flex-col grow">
         <section className="bg-lime-200 py-10">
           <SearchForm
             searchValue={searchValue}
@@ -131,6 +117,15 @@ function SearchPage() {
         </section>
         {loading && <Loader />}
       </main>
+      {params.has('details') && (
+        <div
+          className="fixed w-full h-full bg-slate-500/70"
+          onClick={() => {
+            if (params.has('details'))
+              setParams(updateQueryParams(params, 'details', ''));
+          }}
+        ></div>
+      )}
       <Outlet />
     </ErrorBoundary>
   );

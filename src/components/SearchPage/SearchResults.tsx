@@ -30,7 +30,7 @@ function SearchResults(props: Props) {
           return (
             <div
               key={el.uid}
-              className="flex justify-between gap-5"
+              className="flex justify-between gap-5 cursor-pointer"
               onClick={() =>
                 props.setParams(
                   updateQueryParams(props.params, 'details', el.name)

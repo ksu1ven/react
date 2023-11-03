@@ -45,7 +45,7 @@ function Pagination(props: Props) {
     setPageNumber(newPageNumber - 1);
   }
 
-  function nextPrevButtons(direction: 'next' | 'prev') {
+  function clickNextPrevButton(direction: 'next' | 'prev') {
     const increaseDecreaseNumber = direction == 'next' ? 1 : -1;
     const newPageNumber = pageNumber + increaseDecreaseNumber;
     if (newPageNumber < 0 || newPageNumber > totalPages - 1) return;
@@ -64,11 +64,23 @@ function Pagination(props: Props) {
     }
   }
 
+  function clickLastPage() {
+    if (totalPages > paginationButtonsValue.length)
+      setPaginationButtonsValue(
+        paginationButtonsValue.map(
+          (el, ind) =>
+            totalPages - paginationButtonsValue.length + ind + el - el
+        )
+      );
+    setParams(updateQueryParams(params, 'page', totalPages.toString()));
+    setPageNumber(totalPages - 1);
+  }
+
   return (
     <div className="flex justify-center gap-4 mb-10">
       <button
         className="w-14 h-14 text-lime-700 text-4xl p-3 rounded-full text-white font-extrabold"
-        onClick={() => nextPrevButtons('prev')}
+        onClick={() => clickNextPrevButton('prev')}
       >
         {'<'}
       </button>
@@ -110,23 +122,14 @@ function Pagination(props: Props) {
             : 'w-14 h-14 bg-lime-700 p-3 rounded-full text-white font-extrabold'
         }
         onClick={() => {
-          console.log('clicktotal');
-          if (totalPages > paginationButtonsValue.length)
-            setPaginationButtonsValue(
-              paginationButtonsValue.map(
-                (el, ind) =>
-                  totalPages - paginationButtonsValue.length + ind + el - el
-              )
-            );
-          setParams(updateQueryParams(params, 'page', totalPages.toString()));
-          setPageNumber(totalPages - 1);
+          clickLastPage();
         }}
       >
         {totalPages}
       </button>
       <button
         className="w-14 h-14 text-lime-700 text-4xl p-3 rounded-full text-white font-extrabold"
-        onClick={() => nextPrevButtons('next')}
+        onClick={() => clickNextPrevButton('next')}
       >
         {'>'}
       </button>
