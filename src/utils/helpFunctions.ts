@@ -14,8 +14,12 @@ export function updateQueryParams(
       obj[newKey] = newValue;
       break;
     default:
-      obj[newKey] = newValue;
+      if (!newValue) delete obj[newKey];
+      else {
+        obj[newKey] = newValue;
+      }
   }
+  console.log(obj);
 
   return obj;
 }

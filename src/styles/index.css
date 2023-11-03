@@ -31,7 +31,7 @@ input:focus {
   border-bottom: 5px solid #fff;
   position: absolute;
   top: calc(50vh - 40px);
-  left: calc(50vw - 25px);
+  left: calc(50% - 25px);
   background: linear-gradient(var(--color-loader) 30px, transparent 0) no-repeat;
   background-size: 2px 40px;
   background-position: 50% 0px;

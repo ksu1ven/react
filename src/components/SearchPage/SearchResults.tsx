@@ -1,8 +1,12 @@
 import { Animal } from '../../utils/types';
 import pawImg from '../../assets/paw.png';
+import { SetURLSearchParams } from 'react-router-dom';
+import { updateQueryParams } from '../../utils/helpFunctions';
 
 interface Props {
   searchResultsArray: Readonly<Animal[]>;
+  params: URLSearchParams;
+  setParams: SetURLSearchParams;
 }
 
 function SearchResults(props: Props) {
@@ -24,7 +28,15 @@ function SearchResults(props: Props) {
         props.searchResultsArray.map((el) => {
           const animalDescription = checkDescription(el);
           return (
-            <div key={el.uid} className="flex justify-between gap-5">
+            <div
+              key={el.uid}
+              className="flex justify-between gap-5"
+              onClick={() =>
+                props.setParams(
+                  updateQueryParams(props.params, 'details', el.name)
+                )
+              }
+            >
               <img src={pawImg} alt="animal picture" className="w-16 h-16" />
               <div className="grow">
                 <h2 className="font-extrabold mb-1">{el.name}</h2>

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, Outlet } from 'react-router-dom';
 
 import SearchForm from './SearchForm';
 import SearchResults from './SearchResults';
 import Pagination from './Pagination';
 import Loader from '../Loader';
 import ErrorBoundary from '../ErrorBoundary';
-import { apiResponse } from '../../utils/types';
-import { Animal } from '../../utils/types';
+import { apiResponse, Animal } from '../../utils/types';
+import { updateQueryParams } from '../../utils/helpFunctions';
 import SelectLimit from './Select';
 
 function SearchPage() {
@@ -27,8 +27,6 @@ function SearchPage() {
       ? [1, 2, 3].map((el, ind) => pageNumber + ind - 1 + el - el)
       : [1, 2, 3]
   );
-  console.log(pageNumber);
-  console.log(paginationButtonsValue);
 
   const navigate = useNavigate();
 
@@ -42,11 +40,7 @@ function SearchPage() {
 
     search();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageNumber, pageSize]);
-
-  function changeSearchValue(newValue: string) {
-    setSearchValue(newValue);
-  }
+  }, [searchValue, pageNumber, pageSize]);
 
   useEffect(() => {
     navigate('?' + params, { replace: true });
@@ -87,15 +81,20 @@ function SearchPage() {
   }
   return (
     <ErrorBoundary>
-      <main className="min-h-screen flex flex-col">
+      <main
+        className="relative min-h-screen flex flex-col grow"
+        onClick={() => {
+          if (params.has('details'))
+            setParams(updateQueryParams(params, 'details', ''));
+        }}
+      >
         <section className="bg-lime-200 py-10">
           <SearchForm
             searchValue={searchValue}
-            changeSearchValue={changeSearchValue}
+            setSearchValue={setSearchValue}
             pageNumber={pageNumber}
             setPageNumber={setPageNumber}
             setPaginationButtonsValue={setPaginationButtonsValue}
-            search={search}
             params={params}
             setParams={setParams}
           />
@@ -111,7 +110,11 @@ function SearchPage() {
           />
           {!loading && (
             <>
-              <SearchResults searchResultsArray={searchResultsArray} />
+              <SearchResults
+                searchResultsArray={searchResultsArray}
+                params={params}
+                setParams={setParams}
+              />
               {totalPages && (
                 <Pagination
                   pageNumber={pageNumber}
@@ -126,8 +129,9 @@ function SearchPage() {
             </>
           )}
         </section>
+        {loading && <Loader />}
       </main>
-      {loading && <Loader />}
+      <Outlet />
     </ErrorBoundary>
   );
 }
