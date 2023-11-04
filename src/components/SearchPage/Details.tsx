@@ -1,10 +1,15 @@
-import { useSearchParams, useLoaderData } from 'react-router-dom';
+import {
+  useSearchParams,
+  useLoaderData,
+  useNavigation,
+} from 'react-router-dom';
 import Loader from '../Loader';
 import { Animal, apiResponse } from '../../utils/types';
 import { updateQueryParams } from '../../utils/helpFunctions';
 
 function Details() {
   const [params, setParams] = useSearchParams();
+  const navigation = useNavigation();
   const animal = useLoaderData() as Animal | null;
 
   return params.has('details') ? (
@@ -17,7 +22,9 @@ function Details() {
       >
         X
       </button>
-      {animal ? (
+      {navigation.state === 'loading' ? (
+        <Loader />
+      ) : (
         <div>
           <h1 className="text-5xl font-extrabold text-lime-300 mb-10">
             {animal?.name}
@@ -30,8 +37,6 @@ function Details() {
             <li>Feline: {animal?.feline ? 'Yes' : 'No'}</li>
           </ul>
         </div>
-      ) : (
-        <Loader />
       )}
     </aside>
   ) : (

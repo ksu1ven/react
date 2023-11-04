@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate, Outlet } from 'react-router-dom';
+import { useSearchParams, Outlet } from 'react-router-dom';
 
 import SearchForm from './SearchForm';
 import SearchResults from './SearchResults';
@@ -12,7 +12,6 @@ import SelectLimit from './Select';
 
 function SearchPage() {
   const [params, setParams] = useSearchParams();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState(
@@ -37,10 +36,6 @@ function SearchPage() {
     search();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue, pageNumber, pageSize]);
-
-  useEffect(() => {
-    navigate('?' + params, { replace: true });
-  }, [navigate, params]);
 
   async function search() {
     setLoading(true);
@@ -119,7 +114,7 @@ function SearchPage() {
       </main>
       {params.has('details') && (
         <div
-          className="fixed w-full h-full bg-slate-500/70"
+          className="fixed w-screen h-full bg-slate-500/70"
           onClick={() => {
             if (params.has('details'))
               setParams(updateQueryParams(params, 'details', ''));

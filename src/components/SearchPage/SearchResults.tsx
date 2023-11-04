@@ -1,6 +1,7 @@
 import { Animal } from '../../utils/types';
 import pawImg from '../../assets/paw.png';
-import { SetURLSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { SetURLSearchParams, useNavigate } from 'react-router-dom';
 import { updateQueryParams } from '../../utils/helpFunctions';
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 function SearchResults(props: Props) {
+  const navigate = useNavigate();
   function checkDescription(animal: Animal) {
     const descriptionArr: string[] = [];
     Object.entries(animal).forEach((el) => {
@@ -22,6 +24,10 @@ function SearchResults(props: Props) {
       : "API don't give us description :(";
   }
 
+  useEffect(() => {
+    navigate('?' + props.params, { replace: true });
+  }, [navigate, props.params]);
+
   return (
     <div className="w-1/3 m-auto mb-10 flex flex-col gap-5 ">
       {props.searchResultsArray.length ? (
@@ -31,11 +37,11 @@ function SearchResults(props: Props) {
             <div
               key={el.uid}
               className="flex justify-between gap-5 cursor-pointer"
-              onClick={() =>
+              onClick={() => {
                 props.setParams(
                   updateQueryParams(props.params, 'details', el.name)
-                )
-              }
+                );
+              }}
             >
               <img src={pawImg} alt="animal picture" className="w-16 h-16" />
               <div className="grow">
