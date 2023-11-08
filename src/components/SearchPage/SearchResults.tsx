@@ -1,16 +1,17 @@
 import { Animal } from '../../utils/types';
 import pawImg from '../../assets/paw.png';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { SetURLSearchParams, useNavigate } from 'react-router-dom';
 import { updateQueryParams } from '../../utils/helpFunctions';
+import { SearchResultsContext } from './Contexts';
 
 interface Props {
-  searchResultsArray: Readonly<Animal[]>;
   params: URLSearchParams;
   setParams: SetURLSearchParams;
 }
 
 function SearchResults(props: Props) {
+  const searchResultsArray = useContext(SearchResultsContext);
   const navigate = useNavigate();
   function checkDescription(animal: Animal) {
     const descriptionArr: string[] = [];
@@ -30,8 +31,8 @@ function SearchResults(props: Props) {
 
   return (
     <div className="w-1/3 m-auto mb-10 flex flex-col gap-5 ">
-      {props.searchResultsArray.length ? (
-        props.searchResultsArray.map((el) => {
+      {searchResultsArray.length ? (
+        searchResultsArray.map((el) => {
           const animalDescription = checkDescription(el);
           return (
             <div

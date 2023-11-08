@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { SetURLSearchParams } from 'react-router-dom';
 import { updateQueryParams } from '../../utils/helpFunctions';
+import { SearchValueContext } from './Contexts';
 
 interface Props {
-  searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
   pageNumber: number;
   setPageNumber: React.Dispatch<React.SetStateAction<number>>;
@@ -14,7 +14,6 @@ interface Props {
 
 function SearchForm(props: Props) {
   const {
-    searchValue,
     setSearchValue,
     pageNumber,
     setPageNumber,
@@ -22,6 +21,7 @@ function SearchForm(props: Props) {
     params,
     setParams,
   } = props;
+  const searchValue = useContext(SearchValueContext);
   const inputCurrentValue = useRef(searchValue);
   const [errorOccured, setErrorOccured] = useState(false);
 

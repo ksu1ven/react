@@ -9,6 +9,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import { apiResponse, Animal } from '../../utils/types';
 import { updateQueryParams } from '../../utils/helpFunctions';
 import SelectLimit from './Select';
+import { SearchValueContext, SearchResultsContext } from './Contexts';
 
 function SearchPage() {
   const [params, setParams] = useSearchParams();
@@ -70,15 +71,16 @@ function SearchPage() {
     <ErrorBoundary>
       <main className="relative min-h-screen flex flex-col grow">
         <section className="bg-lime-200 py-10">
-          <SearchForm
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-            pageNumber={pageNumber}
-            setPageNumber={setPageNumber}
-            setPaginationButtonsValue={setPaginationButtonsValue}
-            params={params}
-            setParams={setParams}
-          />
+          <SearchValueContext.Provider value={searchValue}>
+            <SearchForm
+              setSearchValue={setSearchValue}
+              pageNumber={pageNumber}
+              setPageNumber={setPageNumber}
+              setPaginationButtonsValue={setPaginationButtonsValue}
+              params={params}
+              setParams={setParams}
+            />
+          </SearchValueContext.Provider>
         </section>
         <section className="search-results grow">
           <SelectLimit
@@ -91,11 +93,10 @@ function SearchPage() {
           />
           {!loading && (
             <>
-              <SearchResults
-                searchResultsArray={searchResultsArray}
-                params={params}
-                setParams={setParams}
-              />
+              <SearchResultsContext.Provider value={searchResultsArray}>
+                <SearchResults params={params} setParams={setParams} />
+              </SearchResultsContext.Provider>
+
               {totalPages && (
                 <Pagination
                   pageNumber={pageNumber}
