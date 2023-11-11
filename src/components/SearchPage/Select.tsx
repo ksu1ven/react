@@ -28,6 +28,7 @@ function SelectLimit(props: Props) {
         className="bg-lime-700 text-white"
         name="itemsPerPage"
         id="itemsPerPage"
+        data-testid="select"
         defaultValue={pageSize}
         onChange={(e) => {
           setParams(updateQueryParams(params, 'limit', e.target.value));
@@ -37,7 +38,7 @@ function SelectLimit(props: Props) {
         }}
       >
         {optionValues.map((el) => (
-          <option value={el} key={el}>
+          <option value={el} key={el} data-testid="select-option">
             {el}
           </option>
         ))}

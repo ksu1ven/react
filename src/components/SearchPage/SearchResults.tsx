@@ -11,6 +11,7 @@ interface Props {
 }
 
 function SearchResults(props: Props) {
+  const { params, setParams } = props;
   const searchResultsArray = useContext(SearchResultsContext);
   const navigate = useNavigate();
   function checkDescription(animal: Animal) {
@@ -30,7 +31,10 @@ function SearchResults(props: Props) {
   }, [navigate, props.params]);
 
   return (
-    <div className="w-1/3 m-auto mb-10 flex flex-col gap-5 ">
+    <div
+      className="w-1/3 m-auto mb-10 flex flex-col gap-5 "
+      data-testid="search-results"
+    >
       {searchResultsArray.length ? (
         searchResultsArray.map((el) => {
           const animalDescription = checkDescription(el);
@@ -38,10 +42,9 @@ function SearchResults(props: Props) {
             <div
               key={el.uid}
               className="flex justify-between gap-5 cursor-pointer"
+              data-testid="card"
               onClick={() => {
-                props.setParams(
-                  updateQueryParams(props.params, 'details', el.name)
-                );
+                setParams(updateQueryParams(params, 'details', el.name));
               }}
             >
               <img src={pawImg} alt="animal picture" className="w-16 h-16" />
@@ -53,7 +56,9 @@ function SearchResults(props: Props) {
           );
         })
       ) : (
-        <p className="text-3xl">Nothing found:(</p>
+        <p className="text-3xl" data-testid="no-found">
+          Nothing found:(
+        </p>
       )}
     </div>
   );

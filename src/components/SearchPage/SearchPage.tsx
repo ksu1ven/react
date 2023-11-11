@@ -6,7 +6,8 @@ import SearchResults from './SearchResults';
 import Pagination from './Pagination';
 import Loader from '../Loader';
 import ErrorBoundary from '../ErrorBoundary';
-import { apiResponse, Animal } from '../../utils/types';
+import { Animal, apiResponse } from '../../utils/types';
+import { searchCards } from '../../utils/api';
 import { updateQueryParams } from '../../utils/helpFunctions';
 import SelectLimit from './Select';
 import { SearchValueContext, SearchResultsContext } from './Contexts';
@@ -34,35 +35,15 @@ function SearchPage() {
   const [errorOccured, setErrorOccured] = useState(false);
 
   useEffect(() => {
-    search();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue, pageNumber, pageSize]);
-
-  async function search() {
     setLoading(true);
-    localStorage.setItem('searchValue', searchValue);
-    const url = `https://stapi.co/api/v1/rest/animal/search?pageNumber=${pageNumber}&pageSize=${pageSize}`;
-    try {
-      const response = searchValue
-        ? await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `${encodeURIComponent('name')}=${encodeURIComponent(
-              searchValue
-            )}`,
-          })
-        : await fetch(url, {
-            method: 'GET',
-          });
-
-      const json: apiResponse = await response.json();
-      setTotalPages(json.page.totalPages);
-      setLoading(false);
-      setSearchResultsArray(json.animals);
-    } catch {
-      setErrorOccured(true);
-    }
-  }
+    searchCards(searchValue, pageNumber, pageSize)
+      .then((json: apiResponse) => {
+        setTotalPages(json.page.totalPages);
+        setLoading(false);
+        setSearchResultsArray(json.animals);
+      })
+      .catch(() => setErrorOccured(true));
+  }, [searchValue, pageNumber, pageSize]);
 
   if (errorOccured) {
     throw new Error("Hello, I'm Error with server!");

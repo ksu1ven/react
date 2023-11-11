@@ -32,8 +32,10 @@ function SearchForm(props: Props) {
     <form
       action="#"
       className="w-3/5 flex justify-center m-auto gap-x-10 rounded"
+      data-testid="search-form"
       onSubmit={(e) => {
         e.preventDefault();
+        localStorage.setItem('searchValue', inputCurrentValue.current);
         setSearchValue(inputCurrentValue.current);
         setPaginationButtonsValue([1, 2, 3]);
         setParams(updateQueryParams(params, 'search', ''));
@@ -55,6 +57,7 @@ function SearchForm(props: Props) {
         type="text"
         name="search"
         id="search"
+        data-testid="search-input"
         className="w-1/3 p-3"
         onChange={(e) => {
           e.target.value = e.target.value.trim();

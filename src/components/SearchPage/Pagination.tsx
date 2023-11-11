@@ -49,7 +49,9 @@ function Pagination(props: Props) {
     const increaseDecreaseNumber = direction == 'next' ? 1 : -1;
     const newPageNumber = pageNumber + increaseDecreaseNumber;
     if (newPageNumber < 0 || newPageNumber > totalPages - 1) return;
-
+    setParams(
+      updateQueryParams(params, 'page', (newPageNumber + 1).toString())
+    );
     if (paginationButtonsValue.includes(newPageNumber + 1))
       setPageNumber(newPageNumber);
     else {
@@ -59,7 +61,7 @@ function Pagination(props: Props) {
       setPaginationButtonsValue(changedArr);
       const newPageNumber =
         direction == 'next' ? changedArr[changedArr.length - 1] : changedArr[0];
-      setParams(updateQueryParams(params, 'page', newPageNumber.toString()));
+
       setPageNumber(newPageNumber - 1);
     }
   }
@@ -77,7 +79,7 @@ function Pagination(props: Props) {
   }
 
   return (
-    <div className="flex justify-center gap-4 mb-10">
+    <div className="flex justify-center gap-4 mb-10" data-testid="pagination">
       <button
         className="w-14 h-14 text-lime-700 text-4xl p-3 rounded-full text-white font-extrabold"
         onClick={() => clickNextPrevButton('prev')}
@@ -88,6 +90,7 @@ function Pagination(props: Props) {
         return (
           totalPages > value && (
             <button
+              data-testid={`page-${value}-button`}
               key={`button-${value}`}
               className={
                 pageNumber + 1 === value

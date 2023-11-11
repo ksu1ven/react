@@ -13,9 +13,13 @@ function Details() {
   const animal = useLoaderData() as Animal | null;
 
   return params.has('details') ? (
-    <aside className="relative w-1/3 bg-lime-700 text-white flex flex-col pt-40 items-center gap-6">
+    <aside
+      className="relative w-1/3 bg-lime-700 text-white flex flex-col pt-40 items-center gap-6"
+      data-testid="details"
+    >
       <button
         className="absolute top-14 right-14 flex items-center justify-center w-16 h-16 bg-lime-300 text-4xl p-3 rounded-full"
+        data-testid="cross"
         onClick={() => {
           setParams(updateQueryParams(params, 'details', ''));
         }}
@@ -23,10 +27,13 @@ function Details() {
         X
       </button>
       {navigation.state === 'loading' ? (
-        <Loader />
+        <Loader data-testid="loader-details" />
       ) : (
         <div>
-          <h1 className="text-5xl font-extrabold text-lime-300 mb-10">
+          <h1
+            className="text-5xl font-extrabold text-lime-300 mb-10"
+            data-testid="details-h1"
+          >
             {animal?.name}
           </h1>
           <ul className="text-3xl font-extrabold">
