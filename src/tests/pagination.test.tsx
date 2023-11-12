@@ -18,14 +18,31 @@ describe('Tests for the Pagination component', () => {
     });
   });
 
-  it('The component updates URL query parameter when page changes - step 2', async () => {
+  it('The component updates URL query parameter when page changes - click next page', async () => {
     expect(window.location.search).toBe('?page=3');
     render(<App />);
     expect(await screen.findByTestId('pagination')).toBeInTheDocument();
     fireEvent.click(screen.getByText('>'));
   });
 
-  it('The component updates URL query parameter when page changes - step 3', async () => {
+  it('The component updates URL query parameter when page changes - click next 3 pages', async () => {
     expect(window.location.search).toBe('?page=4');
+    render(<App />);
+    expect(await screen.findByTestId('pagination')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('...'));
+  });
+
+  it('The component updates URL query parameter when page changes - click last page', async () => {
+    expect(window.location.search).toBe('?page=7');
+    render(<App />);
+    expect(await screen.findByTestId('pagination')).toBeInTheDocument();
+    expect(screen.getByTestId('page-1-button')).toHaveTextContent('5');
+    expect(screen.getByTestId('page-2-button')).toHaveTextContent('6');
+    expect(screen.getByTestId('page-3-button')).toHaveTextContent('7');
+    fireEvent.click(screen.getByTestId('last-page-button'));
+  });
+
+  it('The component updates URL query parameter when page changes - step 4', async () => {
+    expect(window.location.search).toBe('?page=20');
   });
 });

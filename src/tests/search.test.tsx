@@ -7,7 +7,7 @@ import { SearchValueContext } from '../components/SearchPage/Contexts';
 import SearchPage from '../components/SearchPage/SearchPage';
 
 describe('Tests for the Search component', () => {
-  it('clicking the Search button saves the entered value to the local storage', async () => {
+  it('Clicking the Search button saves the entered value to the local storage', async () => {
     render(
       <SearchValueContext.Provider value={''}>
         <SearchForm

@@ -86,11 +86,11 @@ function Pagination(props: Props) {
       >
         {'<'}
       </button>
-      {paginationButtonsValue.map((value) => {
+      {paginationButtonsValue.map((value, ind) => {
         return (
           totalPages > value && (
             <button
-              data-testid={`page-${value}-button`}
+              data-testid={`page-${ind + 1}-button`}
               key={`button-${value}`}
               className={
                 pageNumber + 1 === value
@@ -124,6 +124,7 @@ function Pagination(props: Props) {
             ? 'w-14 h-14 bg-lime-300 p-3 rounded-full text-white font-extrabold'
             : 'w-14 h-14 bg-lime-700 p-3 rounded-full text-white font-extrabold'
         }
+        data-testid={'last-page-button'}
         onClick={() => {
           clickLastPage();
         }}
