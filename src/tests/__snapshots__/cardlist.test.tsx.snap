@@ -1,0 +1,719 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tests for the Card List component > An appropriate message is displayed if no cards are present 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="w-1/3 m-auto mb-10 flex flex-col gap-5 "
+        data-testid="search-results"
+      >
+        <p
+          class="text-3xl"
+          data-testid="no-found"
+        >
+          Nothing found:(
+        </p>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="w-1/3 m-auto mb-10 flex flex-col gap-5 "
+      data-testid="search-results"
+    >
+      <p
+        class="text-3xl"
+        data-testid="no-found"
+      >
+        Nothing found:(
+      </p>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`Tests for the Card List component > Component renders the specified number of cards - 10 1`] = `
+<div
+  class="w-1/3 m-auto mb-10 flex flex-col gap-5 "
+  data-testid="search-results"
+>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-0
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-1
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-2
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-3
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-4
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-5
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-6
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-7
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-8
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+  <div
+    class="flex justify-between gap-5 cursor-pointer"
+    data-testid="card"
+  >
+    <img
+      alt="animal picture"
+      class="w-16 h-16"
+      src="/src/assets/paw.png"
+    />
+    <div
+      class="grow"
+    >
+      <h2
+        class="font-extrabold mb-1"
+      >
+        testCard-9
+      </h2>
+      <p>
+        Description: 
+        avian
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tests for the Card List component > Component renders the specified number of cards - 10 2`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="w-1/3 m-auto mb-10 flex flex-col gap-5 "
+        data-testid="search-results"
+      >
+        <div
+          class="flex justify-between gap-5 cursor-pointer"
+          data-testid="card"
+        >
+          <img
+            alt="animal picture"
+            class="w-16 h-16"
+            src="/src/assets/paw.png"
+          />
+          <div
+            class="grow"
+          >
+            <h2
+              class="font-extrabold mb-1"
+            >
+              testCard-0
+            </h2>
+            <p>
+              Description: 
+              avian
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-5 cursor-pointer"
+          data-testid="card"
+        >
+          <img
+            alt="animal picture"
+            class="w-16 h-16"
+            src="/src/assets/paw.png"
+          />
+          <div
+            class="grow"
+          >
+            <h2
+              class="font-extrabold mb-1"
+            >
+              testCard-1
+            </h2>
+            <p>
+              Description: 
+              avian
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-5 cursor-pointer"
+          data-testid="card"
+        >
+          <img
+            alt="animal picture"
+            class="w-16 h-16"
+            src="/src/assets/paw.png"
+          />
+          <div
+            class="grow"
+          >
+            <h2
+              class="font-extrabold mb-1"
+            >
+              testCard-2
+            </h2>
+            <p>
+              Description: 
+              avian
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-5 cursor-pointer"
+          data-testid="card"
+        >
+          <img
+            alt="animal picture"
+            class="w-16 h-16"
+            src="/src/assets/paw.png"
+          />
+          <div
+            class="grow"
+          >
+            <h2
+              class="font-extrabold mb-1"
+            >
+              testCard-3
+            </h2>
+            <p>
+              Description: 
+              avian
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-5 cursor-pointer"
+          data-testid="card"
+        >
+          <img
+            alt="animal picture"
+            class="w-16 h-16"
+            src="/src/assets/paw.png"
+          />
+          <div
+            class="grow"
+          >
+            <h2
+              class="font-extrabold mb-1"
+            >
+              testCard-4
+            </h2>
+            <p>
+              Description: 
+              avian
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-5 cursor-pointer"
+          data-testid="card"
+        >
+          <img
+            alt="animal picture"
+            class="w-16 h-16"
+            src="/src/assets/paw.png"
+          />
+          <div
+            class="grow"
+          >
+            <h2
+              class="font-extrabold mb-1"
+            >
+              testCard-5
+            </h2>
+            <p>
+              Description: 
+              avian
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex justify-between gap-5 cursor-pointer"
+          data-testid="card"
+        >
+          <img
+            alt="animal picture"
+            class="w-16 h-16"
+            src="/src/assets/paw.png"
+          />
+          <div
+            class="grow"
+          >
+            <h2
+              class="font-extrabold mb-1"
+            >
+              testCard-6
+            </h2>
+            <p>
+              Description: 
+              avian
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="w-1/3 m-auto mb-10 flex flex-col gap-5 "
+      data-testid="search-results"
+    >
+      <div
+        class="flex justify-between gap-5 cursor-pointer"
+        data-testid="card"
+      >
+        <img
+          alt="animal picture"
+          class="w-16 h-16"
+          src="/src/assets/paw.png"
+        />
+        <div
+          class="grow"
+        >
+          <h2
+            class="font-extrabold mb-1"
+          >
+            testCard-0
+          </h2>
+          <p>
+            Description: 
+            avian
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex justify-between gap-5 cursor-pointer"
+        data-testid="card"
+      >
+        <img
+          alt="animal picture"
+          class="w-16 h-16"
+          src="/src/assets/paw.png"
+        />
+        <div
+          class="grow"
+        >
+          <h2
+            class="font-extrabold mb-1"
+          >
+            testCard-1
+          </h2>
+          <p>
+            Description: 
+            avian
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex justify-between gap-5 cursor-pointer"
+        data-testid="card"
+      >
+        <img
+          alt="animal picture"
+          class="w-16 h-16"
+          src="/src/assets/paw.png"
+        />
+        <div
+          class="grow"
+        >
+          <h2
+            class="font-extrabold mb-1"
+          >
+            testCard-2
+          </h2>
+          <p>
+            Description: 
+            avian
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex justify-between gap-5 cursor-pointer"
+        data-testid="card"
+      >
+        <img
+          alt="animal picture"
+          class="w-16 h-16"
+          src="/src/assets/paw.png"
+        />
+        <div
+          class="grow"
+        >
+          <h2
+            class="font-extrabold mb-1"
+          >
+            testCard-3
+          </h2>
+          <p>
+            Description: 
+            avian
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex justify-between gap-5 cursor-pointer"
+        data-testid="card"
+      >
+        <img
+          alt="animal picture"
+          class="w-16 h-16"
+          src="/src/assets/paw.png"
+        />
+        <div
+          class="grow"
+        >
+          <h2
+            class="font-extrabold mb-1"
+          >
+            testCard-4
+          </h2>
+          <p>
+            Description: 
+            avian
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex justify-between gap-5 cursor-pointer"
+        data-testid="card"
+      >
+        <img
+          alt="animal picture"
+          class="w-16 h-16"
+          src="/src/assets/paw.png"
+        />
+        <div
+          class="grow"
+        >
+          <h2
+            class="font-extrabold mb-1"
+          >
+            testCard-5
+          </h2>
+          <p>
+            Description: 
+            avian
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex justify-between gap-5 cursor-pointer"
+        data-testid="card"
+      >
+        <img
+          alt="animal picture"
+          class="w-16 h-16"
+          src="/src/assets/paw.png"
+        />
+        <div
+          class="grow"
+        >
+          <h2
+            class="font-extrabold mb-1"
+          >
+            testCard-6
+          </h2>
+          <p>
+            Description: 
+            avian
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
