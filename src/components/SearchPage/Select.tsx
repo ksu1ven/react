@@ -1,25 +1,22 @@
 import { SetURLSearchParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../../redux/store/store';
 import { updateQueryParams } from '../../utils/helpFunctions';
+import { setPageSize } from '../../redux/features/limitSlice';
+import { setFirstPage } from '../../redux/features/paginationSlice';
 
 interface Props {
-  pageSize: number;
-  setPageSize: React.Dispatch<React.SetStateAction<number>>;
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
-  setPaginationButtonsValue: React.Dispatch<React.SetStateAction<number[]>>;
   params: URLSearchParams;
   setParams: SetURLSearchParams;
 }
 
 function SelectLimit(props: Props) {
-  const {
-    pageSize,
-    setPageNumber,
-    setPageSize,
-    setPaginationButtonsValue,
-    params,
-    setParams,
-  } = props;
+  const pageSize = useSelector((state: RootState) => state.limit.pageSize);
   const optionValues = [5, 10, 20, 50, 100];
+
+  const dispatch = useDispatch();
+
+  const { params, setParams } = props;
 
   return (
     <label className="flex justify-end mr-32 font-extrabold text-xl">
@@ -29,12 +26,11 @@ function SelectLimit(props: Props) {
         name="itemsPerPage"
         id="itemsPerPage"
         data-testid="select"
-        defaultValue={pageSize}
+        value={pageSize}
         onChange={(e) => {
+          dispatch(setPageSize(+e.target.value));
+          dispatch(setFirstPage());
           setParams(updateQueryParams(params, 'limit', e.target.value));
-          setPageSize(+e.target.value);
-          setPageNumber(0);
-          setPaginationButtonsValue([1, 2, 3]);
         }}
       >
         {optionValues.map((el) => (

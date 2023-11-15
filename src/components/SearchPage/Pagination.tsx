@@ -1,88 +1,59 @@
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../../redux/store/store';
+import {
+  clickNextPrevButton,
+  clickLastPage,
+  setPageNumber,
+  setPaginationButtonsValue,
+} from '../../redux/features/paginationSlice';
 import { SetURLSearchParams } from 'react-router-dom';
 import { updateQueryParams } from '../../utils/helpFunctions';
 
 interface Props {
-  pageNumber: number;
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
-  totalPages: number;
-  paginationButtonsValue: number[];
-  setPaginationButtonsValue: React.Dispatch<React.SetStateAction<number[]>>;
   params: URLSearchParams;
   setParams: SetURLSearchParams;
 }
 
 function Pagination(props: Props) {
-  const {
-    pageNumber,
-    setPageNumber,
-    totalPages,
-    paginationButtonsValue,
-    setPaginationButtonsValue,
-    params,
-    setParams,
-  } = props;
+  const { pageNumber, totalPages, paginationButtonsValue } = useSelector(
+    (state: RootState) => state.pagination
+  );
+
+  const dispatch = useDispatch();
+
+  const { params, setParams } = props;
 
   function changePaginationButtonsValue() {
     if (
       totalPages - paginationButtonsValue[paginationButtonsValue.length - 1] <=
       1
-    ) {
+    )
       return;
-    }
     const increaseNumber =
       totalPages - paginationButtonsValue[paginationButtonsValue.length - 1] <
       paginationButtonsValue.length
         ? 1
         : paginationButtonsValue.length;
-
-    setPaginationButtonsValue(
-      paginationButtonsValue.map((el) => el + increaseNumber)
+    const newButtonsValue = paginationButtonsValue.map(
+      (el) => el + increaseNumber
     );
+    dispatch(setPaginationButtonsValue(newButtonsValue));
     const newPageNumber =
       paginationButtonsValue[paginationButtonsValue.length - 1] +
       increaseNumber;
+    dispatch(setPageNumber(newPageNumber - 1));
     setParams(updateQueryParams(params, 'page', newPageNumber.toString()));
-    setPageNumber(newPageNumber - 1);
-  }
-
-  function clickNextPrevButton(direction: 'next' | 'prev') {
-    const increaseDecreaseNumber = direction == 'next' ? 1 : -1;
-    const newPageNumber = pageNumber + increaseDecreaseNumber;
-    if (newPageNumber < 0 || newPageNumber > totalPages - 1) return;
-    setParams(
-      updateQueryParams(params, 'page', (newPageNumber + 1).toString())
-    );
-    if (paginationButtonsValue.includes(newPageNumber + 1))
-      setPageNumber(newPageNumber);
-    else {
-      const changedArr = paginationButtonsValue.map(
-        (el) => el + increaseDecreaseNumber
-      );
-      setPaginationButtonsValue(changedArr);
-      const newPageNumber =
-        direction == 'next' ? changedArr[changedArr.length - 1] : changedArr[0];
-
-      setPageNumber(newPageNumber - 1);
-    }
-  }
-
-  function clickLastPage() {
-    if (totalPages > paginationButtonsValue.length)
-      setPaginationButtonsValue(
-        paginationButtonsValue.map(
-          (el, ind) =>
-            totalPages - paginationButtonsValue.length + ind + el - el
-        )
-      );
-    setParams(updateQueryParams(params, 'page', totalPages.toString()));
-    setPageNumber(totalPages - 1);
   }
 
   return (
     <div className="flex justify-center gap-4 mb-10" data-testid="pagination">
       <button
         className="w-14 h-14 text-lime-700 text-4xl p-3 rounded-full text-white font-extrabold"
-        onClick={() => clickNextPrevButton('prev')}
+        onClick={() => {
+          if (pageNumber <= 0) return;
+          dispatch(clickNextPrevButton('prev'));
+          setParams(updateQueryParams(params, 'page', pageNumber.toString()));
+        }}
       >
         {'<'}
       </button>
@@ -98,8 +69,8 @@ function Pagination(props: Props) {
                   : 'w-14 h-14 bg-lime-700 p-3 rounded-full text-white font-extrabold'
               }
               onClick={() => {
+                dispatch(setPageNumber(value - 1));
                 setParams(updateQueryParams(params, 'page', value.toString()));
-                setPageNumber(value - 1);
               }}
             >
               {value}
@@ -126,14 +97,21 @@ function Pagination(props: Props) {
         }
         data-testid={'last-page-button'}
         onClick={() => {
-          clickLastPage();
+          dispatch(clickLastPage());
+          setParams(updateQueryParams(params, 'page', totalPages.toString()));
         }}
       >
         {totalPages}
       </button>
       <button
         className="w-14 h-14 text-lime-700 text-4xl p-3 rounded-full text-white font-extrabold"
-        onClick={() => clickNextPrevButton('next')}
+        onClick={() => {
+          if (pageNumber + 1 > totalPages - 1) return;
+          dispatch(clickNextPrevButton('next'));
+          setParams(
+            updateQueryParams(params, 'page', (pageNumber + 2).toString())
+          );
+        }}
       >
         {'>'}
       </button>

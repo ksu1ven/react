@@ -1,28 +1,31 @@
 import { useState, useRef, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../../redux/store/store';
 import { SetURLSearchParams } from 'react-router-dom';
+import { setSearchValue } from '../../redux/features/searchSlice';
+import {
+  setPageNumber,
+  setPaginationButtonsValue,
+} from '../../redux/features/paginationSlice';
 import { updateQueryParams } from '../../utils/helpFunctions';
-import { SearchValueContext } from './Contexts';
 
 interface Props {
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  pageNumber: number;
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
-  setPaginationButtonsValue: React.Dispatch<React.SetStateAction<number[]>>;
   params: URLSearchParams;
   setParams: SetURLSearchParams;
 }
 
 function SearchForm(props: Props) {
-  const {
-    setSearchValue,
-    pageNumber,
-    setPageNumber,
-    setPaginationButtonsValue,
-    params,
-    setParams,
-  } = props;
-  const searchValue = useContext(SearchValueContext);
+  const searchValue = useSelector(
+    (state: RootState) => state.search.searchValue
+  );
+  const pageNumber = useSelector(
+    (state: RootState) => state.pagination.pageNumber
+  );
+  const dispatch = useDispatch();
   const inputCurrentValue = useRef(searchValue);
+
+  const { params, setParams } = props;
+
   const [errorOccured, setErrorOccured] = useState(false);
 
   if (errorOccured) {
@@ -36,10 +39,10 @@ function SearchForm(props: Props) {
       onSubmit={(e) => {
         e.preventDefault();
         localStorage.setItem('searchValue', inputCurrentValue.current);
-        setSearchValue(inputCurrentValue.current);
-        setPaginationButtonsValue([1, 2, 3]);
+        dispatch(setSearchValue(inputCurrentValue.current));
+        dispatch(setPaginationButtonsValue([1, 2, 3]));
         setParams(updateQueryParams(params, 'search', ''));
-        if (pageNumber) setPageNumber(0);
+        if (pageNumber) dispatch(setPageNumber(0));
       }}
     >
       <button
