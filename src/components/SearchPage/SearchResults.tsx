@@ -1,19 +1,21 @@
 import { Animal } from '../../utils/types';
 import pawImg from '../../assets/paw.png';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { SetURLSearchParams, useNavigate } from 'react-router-dom';
 import { updateQueryParams } from '../../utils/helpFunctions';
-import { SearchResultsContext } from './Contexts';
 
 interface Props {
   params: URLSearchParams;
   setParams: SetURLSearchParams;
+  data: Animal[];
 }
 
 function SearchResults(props: Props) {
-  const { params, setParams } = props;
-  const searchResultsArray = useContext(SearchResultsContext);
+  const { params, setParams, data } = props;
+  const searchResultsArray = data;
   const navigate = useNavigate();
+
+  console.log(data);
   function checkDescription(animal: Animal) {
     const descriptionArr: string[] = [];
     Object.entries(animal).forEach((el) => {

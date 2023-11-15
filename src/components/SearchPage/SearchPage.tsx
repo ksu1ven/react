@@ -1,62 +1,62 @@
-import { useState } from 'react';
 import { useSearchParams, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../redux/store/store';
 import SearchForm from './SearchForm';
 import SearchResults from './SearchResults';
 import Pagination from './Pagination';
 import Loader from '../Loader';
-import ErrorBoundary from '../ErrorBoundary';
-import { Animal } from '../../utils/types';
 import { updateQueryParams } from '../../utils/helpFunctions';
 import SelectLimit from './Select';
-import { SearchResultsContext } from './Contexts';
+import { useSearchCardsQuery } from '../../redux/api/searchCards';
+import { setTotalPage } from '../../redux/features/paginationSlice';
 
 function SearchPage() {
-  const [loading] = useState(false);
-  const { totalPages } = useSelector((state: RootState) => state.pagination);
-
+  const pageNumber = useSelector(
+    (state: RootState) => state.pagination.pageNumber
+  );
+  const pageSize = useSelector((state: RootState) => state.limit.pageSize);
+  const dispatch = useDispatch();
   const [params, setParams] = useSearchParams();
 
-  const [searchResultsArray] = useState<Readonly<Animal[]>>([]);
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+  } = useSearchCardsQuery({ pageNumber, pageSize });
 
-  const [errorOccured] = useState(false);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   searchCards(searchValue, pageNumber, pageSize)
-  //     .then((json: apiResponse) => {
-  //       setTotalPages(json.page.totalPages);
-  //       setLoading(false);
-  //       setSearchResultsArray(json.animals);
-  //     })
-  //     .catch(() => setErrorOccured(true));
-  // }, [searchValue, pageNumber, pageSize]);
-
-  if (errorOccured) {
-    throw new Error("Hello, I'm Error with server!");
+  if (data && data?.page?.totalPages) {
+    dispatch(setTotalPage(data?.page?.totalPages));
   }
+  if (isLoading) {
+    console.log('isLoading');
+  }
+  if (isFetching) {
+    console.log('isFetching');
+  }
+
   return (
-    <ErrorBoundary>
+    <>
       <main className="relative min-h-screen flex flex-col grow">
         <section className="bg-lime-200 py-10">
           <SearchForm params={params} setParams={setParams} />
         </section>
         <section className="search-results grow">
           <SelectLimit params={params} setParams={setParams} />
-          {!loading && (
+          {!isLoading && !isFetching && (
             <>
-              <SearchResultsContext.Provider value={searchResultsArray}>
-                <SearchResults params={params} setParams={setParams} />
-              </SearchResultsContext.Provider>
+              <SearchResults
+                params={params}
+                setParams={setParams}
+                data={data.animals}
+              />
 
-              {totalPages && (
+              {data?.page?.totalPages && (
                 <Pagination params={params} setParams={setParams} />
               )}
             </>
           )}
         </section>
-        {loading && <Loader />}
+        {(isLoading || isFetching) && <Loader />}
       </main>
       {params.has('details') && (
         <div
@@ -68,7 +68,7 @@ function SearchPage() {
         ></div>
       )}
       <Outlet />
-    </ErrorBoundary>
+    </>
   );
 }
 
