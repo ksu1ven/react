@@ -7,15 +7,13 @@ import { updateQueryParams } from '../../utils/helpFunctions';
 interface Props {
   params: URLSearchParams;
   setParams: SetURLSearchParams;
-  data: Animal[];
+  searchResults: readonly Animal[];
 }
 
 function SearchResults(props: Props) {
-  const { params, setParams, data } = props;
-  const searchResultsArray = data;
+  const { params, setParams, searchResults } = props;
   const navigate = useNavigate();
 
-  console.log(data);
   function checkDescription(animal: Animal) {
     const descriptionArr: string[] = [];
     Object.entries(animal).forEach((el) => {
@@ -37,8 +35,8 @@ function SearchResults(props: Props) {
       className="w-1/3 m-auto mb-10 flex flex-col gap-5 "
       data-testid="search-results"
     >
-      {searchResultsArray.length ? (
-        searchResultsArray.map((el) => {
+      {searchResults.length ? (
+        searchResults.map((el) => {
           const animalDescription = checkDescription(el);
           return (
             <div

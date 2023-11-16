@@ -1,4 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { apiResponse } from '../../utils/types';
+
+type Params = {
+  pageNumber: number;
+  pageSize: number;
+  searchValue?: string;
+};
 
 export const cardsApi = createApi({
   reducerPath: 'cardsApi',
@@ -6,11 +13,17 @@ export const cardsApi = createApi({
     baseUrl: 'https://stapi.co/api/v1/rest/animal/search',
   }),
   endpoints: (build) => ({
-    searchCards: build.query({
-      query: (params) =>
-        `?pageNumber=${params.pageNumber}&pageSize=${params.pageSize}`,
+    searchByValue: build.mutation<apiResponse, Params>({
+      query: (params) => ({
+        url: `?pageNumber=${params.pageNumber}&pageSize=${params.pageSize}`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `${encodeURIComponent('name')}=${encodeURIComponent(
+          params.searchValue || ''
+        )}`,
+      }),
     }),
   }),
 });
 
-export const { useSearchCardsQuery } = cardsApi;
+export const { useSearchByValueMutation } = cardsApi;

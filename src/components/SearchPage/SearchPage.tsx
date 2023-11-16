@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSearchParams, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../redux/store/store';
@@ -7,32 +8,48 @@ import Pagination from './Pagination';
 import Loader from '../Loader';
 import { updateQueryParams } from '../../utils/helpFunctions';
 import SelectLimit from './Select';
-import { useSearchCardsQuery } from '../../redux/api/searchCards';
+import { useSearchByValueMutation } from '../../redux/api/searchCards';
 import { setTotalPage } from '../../redux/features/paginationSlice';
+import { setLoadingStatus } from '../../redux/features/loaderSlice';
+import { setSearchResults } from '../../redux/features/resultsSlice';
 
 function SearchPage() {
-  const pageNumber = useSelector(
-    (state: RootState) => state.pagination.pageNumber
+  const [params, setParams] = useSearchParams();
+  const { totalPages, pageNumber } = useSelector(
+    (state: RootState) => state.pagination
   );
   const pageSize = useSelector((state: RootState) => state.limit.pageSize);
+  const searchValue = useSelector(
+    (state: RootState) => state.search.searchValue
+  );
+  const searchResults = useSelector(
+    (state: RootState) => state.results.searchResults
+  );
+
   const dispatch = useDispatch();
-  const [params, setParams] = useSearchParams();
 
-  const {
-    data = [],
-    isLoading,
-    isFetching,
-  } = useSearchCardsQuery({ pageNumber, pageSize });
+  const [getAnimals, { data, isLoading, isSuccess }] =
+    useSearchByValueMutation();
 
-  if (data && data?.page?.totalPages) {
-    dispatch(setTotalPage(data?.page?.totalPages));
-  }
   if (isLoading) {
-    console.log('isLoading');
+    dispatch(setLoadingStatus({ loader: 'search', value: true }));
   }
-  if (isFetching) {
-    console.log('isFetching');
+  if (isSuccess) {
+    dispatch(setSearchResults(data?.animals));
+    dispatch(setTotalPage(data?.page.totalPages));
+    dispatch(setLoadingStatus({ loader: 'search', value: false }));
   }
+
+  useEffect(() => {
+    console.log('юз');
+    //my API supports only post requests  to get animal by name, so for search without value
+    //I also use post request (more simple, when only one type of requests)
+    async function getData() {
+      await getAnimals({ pageNumber, pageSize, searchValue });
+    }
+
+    getData();
+  }, [pageNumber, pageSize, searchValue, getAnimals]);
 
   return (
     <>
@@ -42,21 +59,23 @@ function SearchPage() {
         </section>
         <section className="search-results grow">
           <SelectLimit params={params} setParams={setParams} />
-          {!isLoading && !isFetching && (
+          {!isLoading && (
             <>
-              <SearchResults
-                params={params}
-                setParams={setParams}
-                data={data.animals}
-              />
+              {data && (
+                <SearchResults
+                  params={params}
+                  setParams={setParams}
+                  searchResults={searchResults}
+                />
+              )}
 
-              {data?.page?.totalPages && (
+              {totalPages && (
                 <Pagination params={params} setParams={setParams} />
               )}
             </>
           )}
         </section>
-        {(isLoading || isFetching) && <Loader />}
+        {isLoading && <Loader />}
       </main>
       {params.has('details') && (
         <div
