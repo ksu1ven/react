@@ -1,8 +1,10 @@
-import { Animal } from '../../utils/types';
-import pawImg from '../../assets/paw.png';
 import { useEffect } from 'react';
 import { SetURLSearchParams, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { updateQueryParams } from '../../utils/helpFunctions';
+import { setDetailsName } from '../../redux/features/detailsSlice';
+import { Animal } from '../../utils/types';
+import pawImg from '../../assets/paw.png';
 
 interface Props {
   params: URLSearchParams;
@@ -13,6 +15,7 @@ interface Props {
 function SearchResults(props: Props) {
   const { params, setParams, searchResults } = props;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function checkDescription(animal: Animal) {
     const descriptionArr: string[] = [];
@@ -45,6 +48,7 @@ function SearchResults(props: Props) {
               data-testid="card"
               onClick={() => {
                 setParams(updateQueryParams(params, 'details', el.name));
+                dispatch(setDetailsName(el.name));
               }}
             >
               <img src={pawImg} alt="animal picture" className="w-16 h-16" />

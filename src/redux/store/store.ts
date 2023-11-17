@@ -5,6 +5,7 @@ import searchSlice from '../features/searchSlice';
 import loaderSlice from '../features/loaderSlice';
 import resultsSlice from '../features/resultsSlice';
 import { cardsApi } from '../api/searchCards';
+import detailsSlice from '../features/detailsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     search: searchSlice,
     loader: loaderSlice,
     results: resultsSlice,
+    details: detailsSlice,
     [cardsApi.reducerPath]: cardsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

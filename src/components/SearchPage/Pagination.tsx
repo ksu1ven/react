@@ -1,3 +1,4 @@
+import { SetURLSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../redux/store/store';
 import {
@@ -6,7 +7,6 @@ import {
   setPageNumber,
   setPaginationButtonsValue,
 } from '../../redux/features/paginationSlice';
-import { SetURLSearchParams } from 'react-router-dom';
 import { updateQueryParams } from '../../utils/helpFunctions';
 
 interface Props {

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
+import { SetURLSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../redux/store/store';
-import { SetURLSearchParams } from 'react-router-dom';
 import { setSearchValue } from '../../redux/features/searchSlice';
 import {
   setPageNumber,

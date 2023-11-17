@@ -2,16 +2,16 @@ import { useEffect } from 'react';
 import { useSearchParams, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../redux/store/store';
-import SearchForm from './SearchForm';
-import SearchResults from './SearchResults';
-import Pagination from './Pagination';
-import Loader from '../Loader';
 import { updateQueryParams } from '../../utils/helpFunctions';
-import SelectLimit from './Select';
 import { useSearchByValueMutation } from '../../redux/api/searchCards';
 import { setTotalPage } from '../../redux/features/paginationSlice';
 import { setSearchResults } from '../../redux/features/resultsSlice';
 import { setLoadingStatus } from '../../redux/features/loaderSlice';
+import SearchForm from './SearchForm';
+import SearchResults from './SearchResults';
+import Pagination from './Pagination';
+import Loader from '../Loader';
+import SelectLimit from './Select';
 
 function SearchPage() {
   const [params, setParams] = useSearchParams();
@@ -35,7 +35,6 @@ function SearchPage() {
     useSearchByValueMutation();
 
   useEffect(() => {
-    console.log('isLoad');
     if (isLoading) {
       dispatch(setLoadingStatus({ loader: 'search', value: true }));
     }
@@ -44,16 +43,14 @@ function SearchPage() {
       dispatch(setTotalPage(data?.page.totalPages));
       dispatch(setLoadingStatus({ loader: 'search', value: false }));
     }
-  }, [isLoading, isSuccess]);
+  }, [isLoading, isSuccess, data?.animals, data?.page.totalPages, dispatch]);
 
   useEffect(() => {
-    console.log('юз');
     //my API supports only post requests  to get animal by name, so for search without value
     //I also use post request (more simple, when only one type of requests)
     async function getData() {
       await getAnimals({ pageNumber, pageSize, searchValue });
     }
-
     getData();
   }, [pageNumber, pageSize, searchValue, getAnimals]);
 

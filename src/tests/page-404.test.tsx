@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { Route, Routes, MemoryRouter } from 'react-router-dom';
 import Details from '../components/SearchPage/Details';
 import SearchPage from '../components/SearchPage/SearchPage';
-import ErrorPage from '../components/SearchPage/ErrorPage';
+import ErrorPage from '../components/ErrorPage';
 import ErrorWithFetch from '../components/SearchPage/ErrorWithFetch';
 
 describe('Tests for the 404 Page component', () => {

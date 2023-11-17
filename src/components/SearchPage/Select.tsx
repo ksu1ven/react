@@ -1,9 +1,9 @@
 import { SetURLSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../../redux/store/store';
-import { updateQueryParams } from '../../utils/helpFunctions';
 import { setPageSize } from '../../redux/features/limitSlice';
 import { setFirstPage } from '../../redux/features/paginationSlice';
+import type { RootState } from '../../redux/store/store';
+import { updateQueryParams } from '../../utils/helpFunctions';
 
 interface Props {
   params: URLSearchParams;

@@ -1,16 +1,48 @@
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../../redux/store/store';
+import { useSearchByValueMutation } from '../../redux/api/searchCards';
+import { setLoadingStatus } from '../../redux/features/loaderSlice';
 import {
-  useSearchParams,
-  useLoaderData,
-  useNavigation,
-} from 'react-router-dom';
-import Loader from '../Loader';
-import { Animal, apiResponse } from '../../utils/types';
+  setDetailsData,
+  setDetailsName,
+} from '../../redux/features/detailsSlice';
 import { updateQueryParams } from '../../utils/helpFunctions';
+import Loader from '../Loader';
 
 function Details() {
   const [params, setParams] = useSearchParams();
-  const navigation = useNavigation();
-  const animal = useLoaderData() as Animal | null;
+  const { detailsName, detailsData } = useSelector(
+    (state: RootState) => state.details
+  );
+  const detailsLoader = useSelector(
+    (state: RootState) => state.loader.detailsLoader
+  );
+  const dispatch = useDispatch();
+  const [getDetails, { data, isLoading, isSuccess }] =
+    useSearchByValueMutation();
+
+  useEffect(() => {
+    if (detailsName && isLoading) {
+      dispatch(setLoadingStatus({ loader: 'details', value: true }));
+    }
+    if (detailsName && isSuccess) {
+      dispatch(setDetailsData(data?.animals[0]));
+      dispatch(setLoadingStatus({ loader: 'details', value: false }));
+    }
+  }, [isLoading, isSuccess, detailsName, dispatch, data?.animals]);
+
+  useEffect(() => {
+    async function getData() {
+      await getDetails({
+        pageNumber: 0,
+        pageSize: 1000,
+        searchValue: detailsName,
+      });
+    }
+    if (detailsName) getData();
+  }, [detailsName, getDetails]);
 
   return params.has('details') ? (
     <aside
@@ -21,12 +53,13 @@ function Details() {
         className="absolute top-14 right-14 flex items-center justify-center w-16 h-16 bg-lime-300 text-4xl p-3 rounded-full"
         data-testid="cross"
         onClick={() => {
+          dispatch(setDetailsName(''));
           setParams(updateQueryParams(params, 'details', ''));
         }}
       >
         X
       </button>
-      {navigation.state === 'loading' ? (
+      {detailsLoader ? (
         <Loader data-testid="loader-details" />
       ) : (
         <div>
@@ -34,44 +67,21 @@ function Details() {
             className="text-5xl font-extrabold text-lime-300 mb-10"
             data-testid="details-h1"
           >
-            {animal?.name}
+            {detailsData.name}
           </h1>
           <ul className="text-3xl font-extrabold">
-            <li>Avian: {animal?.avian ? 'Yes' : 'No'}</li>
-            <li>Canine: {animal?.canine ? 'Yes' : 'No'}</li>
-            <li>EarthAnimal: {animal?.earthAnimal ? 'Yes' : 'No'}</li>
-            <li>EarthInsect: {animal?.earthInsect ? 'Yes' : 'No'}</li>
-            <li>Feline: {animal?.feline ? 'Yes' : 'No'}</li>
+            <li>Avian: {detailsData.avian ? 'Yes' : 'No'}</li>
+            <li>Canine: {detailsData.canine ? 'Yes' : 'No'}</li>
+            <li>EarthAnimal: {detailsData.earthAnimal ? 'Yes' : 'No'}</li>
+            <li>EarthInsect: {detailsData.earthInsect ? 'Yes' : 'No'}</li>
+            <li>Feline: {detailsData.feline ? 'Yes' : 'No'}</li>
           </ul>
         </div>
       )}
     </aside>
   ) : (
-    ''
+    <></>
   );
-}
-
-export async function loader(): Promise<Animal | null> {
-  try {
-    const animalName = new URL(location.href).searchParams.get('details');
-    if (animalName) {
-      const response = await fetch(
-        'https://stapi.co/api/v1/rest/animal/search?pageNumber=0&pageSize=100',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `${encodeURIComponent('name')}=${encodeURIComponent(
-            animalName
-          )}`,
-        }
-      );
-      const json: apiResponse = await response.json();
-      return json.animals[0];
-    }
-    return null;
-  } catch {
-    throw new Error('No such uid');
-  }
 }
 
 export default Details;
