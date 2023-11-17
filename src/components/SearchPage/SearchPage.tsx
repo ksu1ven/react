@@ -10,8 +10,8 @@ import { updateQueryParams } from '../../utils/helpFunctions';
 import SelectLimit from './Select';
 import { useSearchByValueMutation } from '../../redux/api/searchCards';
 import { setTotalPage } from '../../redux/features/paginationSlice';
-import { setLoadingStatus } from '../../redux/features/loaderSlice';
 import { setSearchResults } from '../../redux/features/resultsSlice';
+import { setLoadingStatus } from '../../redux/features/loaderSlice';
 
 function SearchPage() {
   const [params, setParams] = useSearchParams();
@@ -25,20 +25,26 @@ function SearchPage() {
   const searchResults = useSelector(
     (state: RootState) => state.results.searchResults
   );
+  const searchLoader = useSelector(
+    (state: RootState) => state.loader.searchLoader
+  );
 
   const dispatch = useDispatch();
 
   const [getAnimals, { data, isLoading, isSuccess }] =
     useSearchByValueMutation();
 
-  if (isLoading) {
-    dispatch(setLoadingStatus({ loader: 'search', value: true }));
-  }
-  if (isSuccess) {
-    dispatch(setSearchResults(data?.animals));
-    dispatch(setTotalPage(data?.page.totalPages));
-    dispatch(setLoadingStatus({ loader: 'search', value: false }));
-  }
+  useEffect(() => {
+    console.log('isLoad');
+    if (isLoading) {
+      dispatch(setLoadingStatus({ loader: 'search', value: true }));
+    }
+    if (isSuccess) {
+      dispatch(setSearchResults(data?.animals));
+      dispatch(setTotalPage(data?.page.totalPages));
+      dispatch(setLoadingStatus({ loader: 'search', value: false }));
+    }
+  }, [isLoading, isSuccess]);
 
   useEffect(() => {
     console.log('юз');
@@ -59,7 +65,7 @@ function SearchPage() {
         </section>
         <section className="search-results grow">
           <SelectLimit params={params} setParams={setParams} />
-          {!isLoading && (
+          {!searchLoader && (
             <>
               {data && (
                 <SearchResults
@@ -75,7 +81,7 @@ function SearchPage() {
             </>
           )}
         </section>
-        {isLoading && <Loader />}
+        {searchLoader && <Loader />}
       </main>
       {params.has('details') && (
         <div
