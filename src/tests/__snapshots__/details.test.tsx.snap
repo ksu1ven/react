@@ -36,7 +36,7 @@ exports[`Tests for the Detailed Card component > Detailed card component correct
       class="text-5xl font-extrabold text-lime-300 mb-10"
       data-testid="details-h1"
     >
-      testCard-0
+      details
     </h1>
     <ul
       class="text-3xl font-extrabold"

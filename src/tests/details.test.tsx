@@ -55,7 +55,7 @@ describe('Tests for the Detailed Card component', () => {
     fireEvent.click(card);
     expect(screen.getByTestId('details')).toMatchSnapshot();
     expect(await screen.findByTestId('details-h1')).toHaveTextContent(
-      'testCard-0'
+      'details'
     );
     expect(screen.getByText('EarthAnimal: No')).toBeInTheDocument();
     expect(screen.getByText('Avian: Yes')).toBeInTheDocument();

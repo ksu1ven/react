@@ -5,16 +5,16 @@ import { setupServer } from 'msw/node';
 import { createCardsResponseMock } from './mocks';
 
 export const handlers = [
-  http.post('https://stapi.co/api/v1/rest/animal/search', ({ request }) => {
-    const url = new URL(request.url);
-    const details = url.searchParams.get('details');
-
-    if (details) {
-      return HttpResponse.json(createCardsResponseMock(1, 10));
+  http.post(
+    'https://stapi.co/api/v1/rest/animal/search',
+    async ({ request }) => {
+      const body = await request.text();
+      if (body === 'name=') {
+        return HttpResponse.json(createCardsResponseMock(200, 10, false));
+      }
+      return HttpResponse.json(createCardsResponseMock(1, 10, true));
     }
-
-    return HttpResponse.json(createCardsResponseMock(200, 10));
-  }),
+  ),
 ];
 
 export const server = setupServer(...handlers);

@@ -1,5 +1,9 @@
-export function createCardsResponseMock(arrLength: number, limit: number) {
-  const animalsJSON = createCardsListResponseMock(arrLength, limit);
+export function createCardsResponseMock(
+  arrLength: number,
+  limit: number,
+  details: boolean
+) {
+  const animalsJSON = createCardsListResponseMock(arrLength, limit, details);
   const response = {
     animals: animalsJSON,
     page: {
@@ -17,7 +21,11 @@ export function createCardsResponseMock(arrLength: number, limit: number) {
   };
   return response;
 }
-export function createCardsListResponseMock(arrLength: number, limit: number) {
+export function createCardsListResponseMock(
+  arrLength: number,
+  limit: number,
+  details: boolean
+) {
   return new Array(arrLength)
     .fill(undefined)
     .map((_, ind) => {
@@ -27,7 +35,7 @@ export function createCardsListResponseMock(arrLength: number, limit: number) {
         earthAnimal: false,
         earthInsect: false,
         feline: false,
-        name: `testCard-${ind}`,
+        name: details ? 'details' : `testCard-${ind}`,
         uid: ind.toString(),
       };
     })
