@@ -38,7 +38,6 @@ function SearchForm(props: Props) {
       data-testid="search-form"
       onSubmit={(e) => {
         e.preventDefault();
-        localStorage.setItem('searchValue', inputCurrentValue.current);
         dispatch(setSearchValue(inputCurrentValue.current));
         dispatch(setPaginationButtonsValue([1, 2, 3]));
         setParams(updateQueryParams(params, 'search', ''));
