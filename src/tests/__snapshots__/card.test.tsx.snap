@@ -37,37 +37,37 @@ exports[`Tests for the Card component > Clicking on a card opens a detailed card
   >
     X
   </button>
-  <div>
-    <h1
-      class="text-5xl font-extrabold text-lime-300 mb-10"
-      data-testid="details-h1"
-    />
-    <ul
-      class="text-3xl font-extrabold"
-    >
-      <li>
-        Avian: 
-        No
-      </li>
-      <li>
-        Canine: 
-        No
-      </li>
-      <li>
-        EarthAnimal: 
-        No
-      </li>
-      <li>
-        EarthInsect: 
-        No
-      </li>
-      <li>
-        Feline: 
-        No
-      </li>
-    </ul>
-  </div>
+  <span
+    class="loader"
+    data-testid="loader"
+  />
 </aside>
+`;
+
+exports[`Tests for the Card component > Clicking triggers an additional API call to fetch detailed information. 1`] = `
+<div
+  class="flex justify-between gap-5 cursor-pointer"
+  data-testid="card"
+>
+  <img
+    alt="animal picture"
+    class="w-16 h-16"
+    src="/src/assets/paw.png"
+  />
+  <div
+    class="grow"
+  >
+    <h2
+      class="font-extrabold mb-1"
+    >
+      testCard-0
+    </h2>
+    <p>
+      Description: 
+      avian
+    </p>
+  </div>
+</div>
 `;
 
 exports[`Tests for the Card component > The card component renders the relevant card data 1`] = `

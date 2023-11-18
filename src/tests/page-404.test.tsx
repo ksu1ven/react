@@ -9,7 +9,7 @@ import ErrorWithFetch from '../components/SearchPage/ErrorWithFetch';
 
 describe('Tests for the 404 Page component', () => {
   it('404 page is displayed when navigating to an invalid route.', async () => {
-    render(
+    const page = render(
       <MemoryRouter initialEntries={['/sdfghjsdfghj']}>
         <Routes>
           <Route path="/" element={<SearchPage />}>
@@ -19,6 +19,7 @@ describe('Tests for the 404 Page component', () => {
         </Routes>
       </MemoryRouter>
     );
+    expect(page.baseElement).toMatchSnapshot();
     expect(screen.getByText('Page not found :(')).toBeInTheDocument();
     expect(screen.getByText('Back Home')).toBeInTheDocument();
   });

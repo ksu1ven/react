@@ -1,24 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../redux/store/store';
 import SearchForm from '../components/SearchPage/SearchForm';
-import { SearchValueContext } from '../components/SearchPage/Contexts';
-import SearchPage from '../components/SearchPage/SearchPage';
 
 describe('Tests for the Search component', () => {
   it('Clicking the Search button saves the entered value to the local storage', async () => {
     render(
-      <SearchValueContext.Provider value={''}>
-        <SearchForm
-          setSearchValue={vi.fn()}
-          pageNumber={0}
-          setPageNumber={vi.fn()}
-          setPaginationButtonsValue={vi.fn()}
-          params={new URLSearchParams('')}
-          setParams={vi.fn()}
-        />
-      </SearchValueContext.Provider>
+      <Provider store={store}>
+        <SearchForm params={new URLSearchParams()} setParams={vi.fn()} />
+      </Provider>
     );
     expect(localStorage.getItem('searchValue')).toBe(null);
     fireEvent.change(screen.getByTestId('search-input'), {
@@ -30,16 +22,18 @@ describe('Tests for the Search component', () => {
       target: { value: 'cat' },
     });
     fireEvent.submit(screen.getByTestId('search-form'));
+    expect(screen.getByTestId('search-form')).toMatchSnapshot();
     expect(localStorage.getItem('searchValue')).toBe('cat');
   });
 
   it('The component retrieves the value from the local storage upon mounting.', async () => {
     const localStorageValue = localStorage.getItem('searchValue');
     render(
-      <MemoryRouter>
-        <SearchPage />
-      </MemoryRouter>
+      <Provider store={store}>
+        <SearchForm params={new URLSearchParams()} setParams={vi.fn()} />
+      </Provider>
     );
+    expect(screen.getByTestId('search-form')).toMatchSnapshot();
     expect(screen.getByTestId('search-input')).toHaveValue(localStorageValue);
   });
 });

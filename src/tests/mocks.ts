@@ -1,13 +1,5 @@
-export function createCardsResponseMock(
-  arrLength: number,
-  limit: number,
-  postRequest: boolean
-) {
-  const animalsJSON = createCardsListResponseMock(
-    arrLength,
-    limit,
-    postRequest
-  );
+export function createCardsResponseMock(arrLength: number, limit: number) {
+  const animalsJSON = createCardsListResponseMock(arrLength, limit);
   const response = {
     animals: animalsJSON,
     page: {
@@ -25,23 +17,65 @@ export function createCardsResponseMock(
   };
   return response;
 }
-export function createCardsListResponseMock(
-  arrLength: number,
-  limit: number,
-  postRequest: boolean
-) {
+export function createCardsListResponseMock(arrLength: number, limit: number) {
   return new Array(arrLength)
     .fill(undefined)
-    .map((el, ind) => {
+    .map((_, ind) => {
       return {
         avian: true,
         canine: false,
         earthAnimal: false,
         earthInsect: false,
         feline: false,
-        name: postRequest ? 'postRequestCardName' : `testCard-${ind}`,
+        name: `testCard-${ind}`,
         uid: ind.toString(),
       };
     })
     .slice(0, limit);
 }
+
+export const useMutationMockValue = [
+  () => {},
+  {
+    data: {
+      animals: [
+        {
+          avian: true,
+          canine: false,
+          earthAnimal: false,
+          earthInsect: false,
+          feline: false,
+          name: 'postRequestCardName',
+          uid: '0',
+        },
+      ],
+      page: {
+        firstPage: 0,
+        lastPage: 1,
+        numberOfElements: 1,
+        pageNumber: 0,
+        pageSize: 10,
+        totalElements: 1,
+        totalPages: 1,
+      },
+      sort: {
+        clauses: [],
+      },
+    },
+    endpointName: 'searchByValue',
+    fulfilledTimeStamp: 1700323816522,
+    isError: false,
+    isLoading: false,
+    isSuccess: true,
+    isUninitialized: false,
+    originalArgs: {
+      pageNumber: 0,
+      pageSize: 1000,
+      searchValue: 'postRequestCardName',
+    },
+    requestId: 'k4PYHjbuSvZuXK50hpvQu',
+    reset: () => {},
+    startedTimeStamp: 1700323816487,
+    status: 'fulfilled',
+  },
+];
