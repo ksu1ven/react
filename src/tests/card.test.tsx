@@ -44,7 +44,7 @@ describe('Tests for the Card component', () => {
           <SearchResults
             params={new URLSearchParams('')}
             setParams={vi.fn()}
-            searchResults={createCardsListResponseMock(7, 10)}
+            searchResults={createCardsListResponseMock(7, 10, false)}
           />
         </Provider>
       </MemoryRouter>

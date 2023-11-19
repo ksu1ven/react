@@ -13,7 +13,7 @@ describe('Tests for the Card List component', () => {
         <SearchResults
           params={new URLSearchParams('')}
           setParams={vi.fn()}
-          searchResults={createCardsListResponseMock(7, 10)}
+          searchResults={createCardsListResponseMock(7, 10, false)}
         />
       </MemoryRouter>
     );
