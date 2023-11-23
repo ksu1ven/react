@@ -1,17 +1,23 @@
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
+
 export type apiResponse = {
-  animals: Readonly<Animal[]>;
-  page: {
-    firstPage: boolean;
-    lastPage: boolean;
-    numberOfElements: number;
-    pageNumber: number;
-    pageSize: number;
-    totalElements: number;
-    totalPages: number;
+  data: {
+    animals: Animal[];
+    page: {
+      firstPage: boolean;
+      lastPage: boolean;
+      numberOfElements: number;
+      pageNumber: number;
+      pageSize: number;
+      totalElements: number;
+      totalPages: number;
+    };
+    sort: {
+      clauses: [];
+    };
   };
-  sort: {
-    clauses: [];
-  };
+  error: FetchBaseQueryError | SerializedError;
 };
 
 export type Animal = {
@@ -22,4 +28,11 @@ export type Animal = {
   feline: boolean;
   name: string;
   uid: string;
+};
+
+export type URLParams = {
+  page?: string;
+  limit?: string;
+  search?: string;
+  details?: string;
 };

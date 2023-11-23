@@ -1,23 +1,31 @@
+import { ParsedUrlQuery } from "querystring";
+import { URLParams } from "./types";
+
 export function updateQueryParams(
-  params: URLSearchParams,
-  newKey: string,
+  params: ParsedUrlQuery,
+  newKey: "page" | "search" | "details" | "search" | "limit",
   newValue: string
 ) {
-  const obj = Object.fromEntries(params.entries());
+  let newParams = params as URLParams;
   switch (newKey) {
-    case 'search': {
-      delete obj.page;
+    case "search": {
+      delete newParams.page;
+      if (!newValue) delete newParams.search;
+      else {
+        newParams[newKey] = newValue;
+      }
       break;
     }
-    case 'limit':
-      delete obj.page;
-      obj[newKey] = newValue;
+    case "limit":
+      delete newParams.page;
+      newParams[newKey] = newValue;
       break;
     default:
-      if (!newValue) delete obj[newKey];
+      if (!newValue) delete newParams[newKey];
       else {
-        obj[newKey] = newValue;
+        newParams[newKey] = newValue;
       }
   }
-  return obj;
+
+  return new URLSearchParams(newParams);
 }

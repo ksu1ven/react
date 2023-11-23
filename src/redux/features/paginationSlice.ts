@@ -1,69 +1,45 @@
-import { createSlice } from '@reduxjs/toolkit';
-
-const page = Number(new URLSearchParams(window.location.search).get('page'));
+import { createSlice } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
+import { useRouter } from "next/router";
 
 const initialState = {
-  pageNumber: page ? page - 1 : 0,
-  totalPages: 10,
-  paginationButtonsValue:
-    page && page > 2 ? [1, 2, 3].map((_, ind) => page + ind - 1) : [1, 2, 3],
+  paginationButtonsValue: <number[]>[],
 };
 
 export const paginationSlice = createSlice({
-  name: 'pagination',
+  name: "pagination",
   initialState,
   reducers: {
-    setPageNumber(state, action) {
-      state.pageNumber = action.payload;
-    },
-    setTotalPage(state, action) {
-      state.totalPages = action.payload;
-    },
     setPaginationButtonsValue(state, action) {
       state.paginationButtonsValue = action.payload;
     },
-    setFirstPage(state) {
-      state.pageNumber = 0;
-      state.paginationButtonsValue = [1, 2, 3];
-    },
 
     clickNextPrevButton(state, action) {
-      const increaseDecreaseNumber = action.payload == 'next' ? 1 : -1;
-      const newPageNumber = state.pageNumber + increaseDecreaseNumber;
-      if (state.paginationButtonsValue.includes(newPageNumber + 1))
-        state.pageNumber = newPageNumber;
-      else {
-        state.paginationButtonsValue = state.paginationButtonsValue.map(
-          (el) => el + increaseDecreaseNumber
-        );
-        const newPageNumber =
-          action.payload == 'next'
-            ? state.paginationButtonsValue[
-                state.paginationButtonsValue.length - 1
-              ]
-            : state.paginationButtonsValue[0];
-
-        state.pageNumber = newPageNumber - 1;
-      }
+      const increaseDecreaseNumber = action.payload == "next" ? 1 : -1;
+      state.paginationButtonsValue = state.paginationButtonsValue.map(
+        (el) => el + increaseDecreaseNumber
+      );
     },
-
-    clickLastPage(state) {
-      if (state.totalPages > state.paginationButtonsValue.length)
+    clickLastPage(state, action) {
+      if (action.payload.totalPages > state.paginationButtonsValue.length)
         state.paginationButtonsValue = state.paginationButtonsValue.map(
           (_, ind) =>
-            state.totalPages - state.paginationButtonsValue.length + ind
+            action.payload.totalPages -
+            state.paginationButtonsValue.length +
+            ind
         );
-      state.pageNumber = state.totalPages - 1;
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      return {
+        ...state,
+        ...action.payload.auth,
+      };
     },
   },
 });
 
-export const {
-  setPageNumber,
-  setTotalPage,
-  setPaginationButtonsValue,
-  setFirstPage,
-  clickNextPrevButton,
-  clickLastPage,
-} = paginationSlice.actions;
+export const { setPaginationButtonsValue, clickNextPrevButton, clickLastPage } =
+  paginationSlice.actions;
 export default paginationSlice.reducer;
