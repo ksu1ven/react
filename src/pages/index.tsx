@@ -71,7 +71,6 @@ export default function SearchPage({
   const { pageNumber, totalPages, pageSize } = response.data.page;
   const searchResults = response.data.animals;
   const detailsData = detailsResponse?.data.animals[0];
-  console.log(detailsData);
 
   return (
     <main className="flex">
