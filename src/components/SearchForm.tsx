@@ -1,13 +1,12 @@
-import { useRouter } from "next/router";
-import { useRef, useState } from "react";
-import { updateQueryParams } from "../utils/helpFunctions";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { useRef, useState } from 'react';
+import { updateQueryParams } from '../utils/helpFunctions';
 
-function SearchForm(props: Record<"searchValue", string>) {
+function SearchForm(props: Record<'searchValue', string>) {
   const { searchValue } = props;
   const inputCurrentValue = useRef(searchValue);
   const [errorOccured, setErrorOccured] = useState(false);
-  const dispatch = useDispatch();
 
   const router = useRouter();
 
@@ -21,13 +20,13 @@ function SearchForm(props: Record<"searchValue", string>) {
       data-testid="search-form"
       onSubmit={(e) => {
         e.preventDefault();
-        localStorage.setItem("search", inputCurrentValue.current);
+        localStorage.setItem('search', inputCurrentValue.current);
         if (searchValue !== inputCurrentValue.current)
           router.push(
-            "?" +
+            '?' +
               updateQueryParams(
                 router.query,
-                "search",
+                'search',
                 inputCurrentValue.current
               )
           );

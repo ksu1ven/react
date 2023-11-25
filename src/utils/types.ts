@@ -1,5 +1,5 @@
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 
 export type apiResponse = {
   data: {
@@ -13,7 +13,7 @@ export type apiResponse = {
       totalElements: number;
       totalPages: number;
     };
-    sort: {
+    sort?: {
       clauses: [];
     };
   };

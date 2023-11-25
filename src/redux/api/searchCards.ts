@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { HYDRATE } from "next-redux-wrapper";
-import { apiResponse } from "../../utils/types";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
+import { apiResponse } from '../../utils/types';
 
 type Params = {
   pageNumber: number;
@@ -9,9 +9,9 @@ type Params = {
 };
 
 export const cardsApi = createApi({
-  reducerPath: "cardsApi",
+  reducerPath: 'cardsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://stapi.co/api/v1/rest/animal/search",
+    baseUrl: 'https://stapi.co/api/v1/rest/animal/search',
   }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
@@ -22,10 +22,10 @@ export const cardsApi = createApi({
     searchByValue: build.mutation<apiResponse, Params>({
       query: (params) => ({
         url: `?pageNumber=${params.pageNumber}&pageSize=${params.pageSize}`,
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `${encodeURIComponent("name")}=${encodeURIComponent(
-          params.searchValue || ""
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `${encodeURIComponent('name')}=${encodeURIComponent(
+          params.searchValue || ''
         )}`,
       }),
     }),

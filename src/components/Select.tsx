@@ -1,7 +1,8 @@
-import { useRouter } from "next/router";
-import { updateQueryParams } from "@/utils/helpFunctions";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { updateQueryParams } from '../utils/helpFunctions';
 
-function SelectLimit(props: Record<"pageSize", number>) {
+function SelectLimit(props: Record<'pageSize', number>) {
   const { pageSize } = props;
   const optionValues = [5, 10, 20, 50, 100];
 
@@ -18,7 +19,7 @@ function SelectLimit(props: Record<"pageSize", number>) {
         value={pageSize.toString()}
         onChange={(e) => {
           router.push(
-            "?" + updateQueryParams(router.query, "limit", e.target.value)
+            '?' + updateQueryParams(router.query, 'limit', e.target.value)
           );
         }}
       >

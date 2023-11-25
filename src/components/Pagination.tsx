@@ -1,10 +1,6 @@
-import {
-  clickNextPrevButton,
-  clickLastPage,
-  setPaginationButtonsValue,
-} from "../redux/features/paginationSlice";
-import { updateQueryParams } from "../utils/helpFunctions";
-import { useRouter } from "next/router";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { updateQueryParams } from '../utils/helpFunctions';
 
 interface Props {
   pageNumber: number;
@@ -28,15 +24,11 @@ function Pagination(props: Props) {
       paginationButtonsValue.length
         ? 1
         : paginationButtonsValue.length;
-    const newButtonsValue = paginationButtonsValue.map(
-      (el) => el + increaseNumber
-    );
-
     const newPageNumber =
       paginationButtonsValue[paginationButtonsValue.length - 1] +
       increaseNumber;
     router.push(
-      "?" + updateQueryParams(router.query, "page", newPageNumber.toString())
+      '?' + updateQueryParams(router.query, 'page', newPageNumber.toString())
     );
   }
 
@@ -47,11 +39,11 @@ function Pagination(props: Props) {
         onClick={() => {
           if (pageNumber <= 0) return;
           router.push(
-            "?" + updateQueryParams(router.query, "page", pageNumber.toString())
+            '?' + updateQueryParams(router.query, 'page', pageNumber.toString())
           );
         }}
       >
-        {"<"}
+        {'<'}
       </button>
       {paginationButtonsValue.map((value, ind) => {
         return (
@@ -61,13 +53,13 @@ function Pagination(props: Props) {
               key={`button-${value}`}
               className={
                 pageNumber + 1 === value
-                  ? "w-14 h-14 bg-lime-300 p-3 rounded-full text-white font-extrabold"
-                  : "w-14 h-14 bg-lime-700 p-3 rounded-full text-white font-extrabold"
+                  ? 'w-14 h-14 bg-lime-300 p-3 rounded-full text-white font-extrabold'
+                  : 'w-14 h-14 bg-lime-700 p-3 rounded-full text-white font-extrabold'
               }
               onClick={() => {
                 router.push(
-                  "?" +
-                    updateQueryParams(router.query, "page", value.toString())
+                  '?' +
+                    updateQueryParams(router.query, 'page', value.toString())
                 );
               }}
             >
@@ -90,13 +82,13 @@ function Pagination(props: Props) {
       <button
         className={
           pageNumber + 1 === totalPages
-            ? "w-14 h-14 bg-lime-300 p-3 rounded-full text-white font-extrabold"
-            : "w-14 h-14 bg-lime-700 p-3 rounded-full text-white font-extrabold"
+            ? 'w-14 h-14 bg-lime-300 p-3 rounded-full text-white font-extrabold'
+            : 'w-14 h-14 bg-lime-700 p-3 rounded-full text-white font-extrabold'
         }
-        data-testid={"last-page-button"}
+        data-testid={'last-page-button'}
         onClick={() => {
           router.push(
-            "?" + updateQueryParams(router.query, "page", totalPages.toString())
+            '?' + updateQueryParams(router.query, 'page', totalPages.toString())
           );
         }}
       >
@@ -107,16 +99,16 @@ function Pagination(props: Props) {
         onClick={() => {
           if (pageNumber + 1 > totalPages - 1) return;
           router.push(
-            "?" +
+            '?' +
               updateQueryParams(
                 router.query,
-                "page",
+                'page',
                 (pageNumber + 2).toString()
               )
           );
         }}
       >
-        {">"}
+        {'>'}
       </button>
     </div>
   );

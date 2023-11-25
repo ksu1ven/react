@@ -1,14 +1,14 @@
-import { ParsedUrlQuery } from "querystring";
-import { URLParams } from "./types";
+import { ParsedUrlQuery } from 'querystring';
+import { URLParams } from './types';
 
 export function updateQueryParams(
   params: ParsedUrlQuery,
-  newKey: "page" | "search" | "details" | "search" | "limit",
+  newKey: 'page' | 'search' | 'details' | 'search' | 'limit',
   newValue: string
 ) {
-  let newParams = params as URLParams;
+  const newParams = params as URLParams;
   switch (newKey) {
-    case "search": {
+    case 'search': {
       delete newParams.page;
       if (!newValue) delete newParams.search;
       else {
@@ -16,7 +16,7 @@ export function updateQueryParams(
       }
       break;
     }
-    case "limit":
+    case 'limit':
       delete newParams.page;
       newParams[newKey] = newValue;
       break;

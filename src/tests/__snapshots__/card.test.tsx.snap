@@ -1,0 +1,67 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tests for the Card component > Clicking on a card opens a detailed card component 1`] = `
+<div
+  class="flex justify-between gap-5 cursor-pointer"
+  data-testid="card"
+>
+  <img
+    alt="animal picture"
+    class="w-16 h-16"
+    data-nimg="1"
+    decoding="async"
+    height="100"
+    loading="lazy"
+    src="/_next/image?url=%2Fsrc%2Fassets%2Fpaw.png&w=256&q=75"
+    srcset="/_next/image?url=%2Fsrc%2Fassets%2Fpaw.png&w=128&q=75 1x, /_next/image?url=%2Fsrc%2Fassets%2Fpaw.png&w=256&q=75 2x"
+    style="color: transparent;"
+    width="100"
+  />
+  <div
+    class="grow"
+  >
+    <h2
+      class="font-extrabold mb-1"
+    >
+      testCard-0
+    </h2>
+    <p>
+      Description: 
+      avian
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Tests for the Card component > The card component renders the relevant card data 1`] = `
+<div
+  class="flex justify-between gap-5 cursor-pointer"
+  data-testid="card"
+>
+  <img
+    alt="animal picture"
+    class="w-16 h-16"
+    data-nimg="1"
+    decoding="async"
+    height="100"
+    loading="lazy"
+    src="/_next/image?url=%2Fsrc%2Fassets%2Fpaw.png&w=256&q=75"
+    srcset="/_next/image?url=%2Fsrc%2Fassets%2Fpaw.png&w=128&q=75 1x, /_next/image?url=%2Fsrc%2Fassets%2Fpaw.png&w=256&q=75 2x"
+    style="color: transparent;"
+    width="100"
+  />
+  <div
+    class="grow"
+  >
+    <h2
+      class="font-extrabold mb-1"
+    >
+      testCard-0
+    </h2>
+    <p>
+      Description: 
+      avian
+    </p>
+  </div>
+</div>
+`;

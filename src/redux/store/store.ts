@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
@@ -8,19 +8,17 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-import { createWrapper } from "next-redux-wrapper";
-import storage from "redux-persist/lib/storage";
-import paginationSlice from "../features/paginationSlice";
-import { cardsApi } from "../api/searchCards";
+} from 'redux-persist';
+import { createWrapper } from 'next-redux-wrapper';
+import storage from 'redux-persist/lib/storage';
+import { cardsApi } from '../api/searchCards';
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  whitelist: ["search"],
+  whitelist: ['search'],
 };
 const rootReducer = combineReducers({
-  pagination: paginationSlice,
   [cardsApi.reducerPath]: cardsApi.reducer,
 });
 
@@ -38,8 +36,8 @@ const makeStore = () =>
   });
 
 export type AppStore = ReturnType<typeof makeStore>;
-export type RootState = ReturnType<AppStore["getState"]>;
-export type AppDispatch = AppStore["dispatch"];
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
 
 export const wrapper = createWrapper<AppStore>(makeStore);
 

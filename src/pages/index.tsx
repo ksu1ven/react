@@ -1,24 +1,26 @@
-import { RootState, wrapper } from "../redux/store/store";
-import SearchForm from "../components/SearchForm";
-import SearchResults from "../components/SearchResults";
-import Pagination from "../components/Pagination";
-import SelectLimit from "../components/Select";
-import Details from "@/components/Details";
-import Error from "./_error";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { wrapper } from '../redux/store/store';
 import {
   getRunningQueriesThunk,
   searchByValue,
-} from "../redux/api/searchCards";
-import { apiResponse } from "@/utils/types";
-import { useRouter } from "next/router";
-import { updateQueryParams } from "@/utils/helpFunctions";
+} from '../redux/api/searchCards';
+import SearchForm from '../components/SearchForm';
+import SearchResults from '../components/SearchResults';
+import Pagination from '../components/Pagination';
+import SelectLimit from '../components/Select';
+import Details from '../components/Details';
+import Error from './_error';
+import ErrorWithFetch from '../components/ErrorWithFetch';
+import { apiResponse } from '../utils/types';
+import { updateQueryParams } from '../utils/helpFunctions';
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     const pageNumber = Number(context.query.page) - 1 || 0;
     const pageSize = Number(context.query.limit) || 10;
-    const searchValue = context.query.search?.toString() || "";
-    const details = context.query.details?.toString() || "";
+    const searchValue = context.query.search?.toString() || '';
+    const details = context.query.details?.toString() || '';
     const response = await store.dispatch(
       searchByValue.initiate({
         pageNumber,
@@ -69,6 +71,7 @@ export default function SearchPage({
   const { pageNumber, totalPages, pageSize } = response.data.page;
   const searchResults = response.data.animals;
   const detailsData = detailsResponse?.data.animals[0];
+  console.log(detailsData);
 
   return (
     <main className="flex">
@@ -89,16 +92,20 @@ export default function SearchPage({
         </section>
       </section>
 
-      {router.query.details && detailsData && (
+      {router.query.details && (
         <>
           <div
             className="fixed w-screen h-full bg-slate-500/70"
             onClick={() => {
-              const newParams = updateQueryParams(router.query, "details", "");
-              router.push(newParams.toString() ? "?" + newParams : "");
+              const newParams = updateQueryParams(router.query, 'details', '');
+              router.push(newParams.toString() ? '?' + newParams : '');
             }}
           ></div>
-          <Details detailsData={detailsData} />
+          {detailsResponse?.error || !detailsData ? (
+            <ErrorWithFetch param={'animal'} />
+          ) : (
+            <Details detailsData={detailsData} />
+          )}
         </>
       )}
     </main>

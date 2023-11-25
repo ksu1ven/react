@@ -1,8 +1,9 @@
-import { useRouter } from "next/router";
-import { updateQueryParams } from "../utils/helpFunctions";
-import { Animal } from "@/utils/types";
+import React from 'react';
+import { useRouter } from 'next/router';
+import { updateQueryParams } from '../utils/helpFunctions';
+import { Animal } from '../utils/types';
 
-function Details(props: Record<"detailsData", Animal>) {
+function Details(props: Record<'detailsData', Animal>) {
   const { detailsData } = props;
   const router = useRouter();
   return (
@@ -14,8 +15,8 @@ function Details(props: Record<"detailsData", Animal>) {
         className="absolute top-14 right-14 flex items-center justify-center w-16 h-16 bg-lime-300 text-4xl p-3 rounded-full"
         data-testid="cross"
         onClick={() => {
-          const newParams = updateQueryParams(router.query, "details", "");
-          router.push(newParams.toString() ? "?" + newParams : "");
+          const newParams = updateQueryParams(router.query, 'details', '');
+          router.push(newParams.toString() ? '?' + newParams : '');
         }}
       >
         X
@@ -29,11 +30,11 @@ function Details(props: Record<"detailsData", Animal>) {
           {detailsData.name}
         </h1>
         <ul className="text-3xl font-extrabold">
-          <li>Avian: {detailsData.avian ? "Yes" : "No"}</li>
-          <li>Canine: {detailsData.canine ? "Yes" : "No"}</li>
-          <li>EarthAnimal: {detailsData.earthAnimal ? "Yes" : "No"}</li>
-          <li>EarthInsect: {detailsData.earthInsect ? "Yes" : "No"}</li>
-          <li>Feline: {detailsData.feline ? "Yes" : "No"}</li>
+          <li>Avian: {detailsData.avian ? 'Yes' : 'No'}</li>
+          <li>Canine: {detailsData.canine ? 'Yes' : 'No'}</li>
+          <li>EarthAnimal: {detailsData.earthAnimal ? 'Yes' : 'No'}</li>
+          <li>EarthInsect: {detailsData.earthInsect ? 'Yes' : 'No'}</li>
+          <li>Feline: {detailsData.feline ? 'Yes' : 'No'}</li>
         </ul>
       </div>
     </aside>

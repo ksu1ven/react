@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: "Playpen Sans", cursive;
+  font-family: 'Playpen Sans', cursive;
 }
 
 input:focus {
@@ -39,7 +39,7 @@ input:focus {
 }
 .loader:before,
 .loader:after {
-  content: "";
+  content: '';
   width: 40px;
   left: 50%;
   height: 35px;
