@@ -1,17 +1,10 @@
 @tailwind base;
 @tailwind utilities;
 
-:root {
-  --color-loader: rgb(101 163 13);
-}
-
 body {
-  font-family: 'Playpen Sans', cursive;
+  font-family: 'Cabin', sans-serif;
 }
 
 input:focus {
   outline: none;
 }
-
-
-
