@@ -7,7 +7,7 @@ export default function InputImage(
 ) {
   const { inputRef } = props;
   const errorImage = useSelector((state: RootState) => state.error.image);
-  console.log(errorImage);
+
   return (
     <fieldset>
       <label htmlFor="image">Image: </label>

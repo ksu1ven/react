@@ -31,7 +31,7 @@ export const validationSchema = object({
   image: object({
     size: number()
       .required('Image is required')
-      .max(150000, 'The image size must be up to 150 kB'),
+      .max(204800, 'The image size must be up to 200 kB'),
 
     type: string()
       .required('Image is required')

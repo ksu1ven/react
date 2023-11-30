@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  // InputCountry,
+  InputCountry,
   InputAccept,
   InputAge,
   InputName,
@@ -28,12 +28,13 @@ export function UncontrolledFormPage() {
   const femaleRef = useRef<HTMLInputElement>(null);
   const acceptRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
-  // const countryRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     try {
+      console.log(imageRef.current?.files);
       await validationSchema.validate(
         {
           name: nameRef.current?.value[0],
@@ -84,7 +85,7 @@ export function UncontrolledFormPage() {
           <InputGender maleRef={maleRef} femaleRef={femaleRef} />
           <InputAccept inputRef={acceptRef} />
           <InputImage inputRef={imageRef} />
-          {/* <InputCountry inputRef={countryRef} />  */}
+          <InputCountry inputRef={countryRef} />
           <button type="submit">Submit</button>
         </form>
       </main>
