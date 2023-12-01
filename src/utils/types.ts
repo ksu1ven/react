@@ -4,14 +4,24 @@ import {
   UseFormSetError,
 } from 'react-hook-form';
 
-type Fields = {
+export type FormData = {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  gender: string;
+  image: string;
+  country: string;
+};
+
+export type Fields = {
   accept?: boolean;
   name: string;
   age: number;
   email: string;
   password: string;
   gender: string;
-  image?: File;
+  image?: FileList;
   passwordRepeat: string;
   country: string;
 };

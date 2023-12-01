@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { FormHookPasswordsProps } from '../../utils/types';
-import { showPasswordStrength } from '../../utils/functions';
+import { FormHookPasswordsProps } from '../../../utils/types';
+import { showPasswordStrength } from '../../../utils/functions';
 
 export default function InputPassword(props: FormHookPasswordsProps) {
   const {

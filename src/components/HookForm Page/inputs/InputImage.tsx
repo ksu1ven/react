@@ -1,4 +1,4 @@
-import { FormHookProps } from '../../utils/types';
+import { FormHookProps } from '../../../utils/types';
 
 export default function InputImage(props: FormHookProps) {
   const { register, error } = props;

@@ -9,15 +9,16 @@ import {
   InputPassword,
   InputImage,
   InputEmail,
-} from './index';
-import { validationSchema } from '../../utils/yup';
-import { ValidationError } from 'yup';
+} from './inputs/index';
 import { useDispatch } from 'react-redux';
 import {
   setValidationErrors,
   removeValidationErrors,
 } from '../../redux/features/errorSlice';
-import { showPasswordStrength } from '../../utils/functions';
+import { setForm } from '../../redux/features/formSlice';
+import { showPasswordStrength, fileToBase64 } from '../../utils/functions';
+import { validationSchema } from '../../utils/yup';
+import { ValidationError } from 'yup';
 
 export function UncontrolledFormPage() {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -46,16 +47,32 @@ export function UncontrolledFormPage() {
           password: passwordRef.current?.value,
           passwordRepeat: passwordRepeatRef.current?.value,
           accept: acceptRef.current?.checked,
-          gender: imageRef.current?.value,
+          gender: genderRef.current?.value,
           image: imageRef.current?.files,
           country: countryRef.current?.value,
         },
         { abortEarly: false }
       );
       dispatch(removeValidationErrors());
+
+      const image64 =
+        imageRef.current && imageRef.current.files
+          ? await fileToBase64(imageRef.current.files[0])
+          : '';
+
+      dispatch(
+        setForm({
+          name: nameRef.current?.value[0],
+          age: Number(ageRef.current?.value),
+          email: emailRef.current?.value,
+          password: passwordRef.current?.value,
+          gender: genderRef.current?.value,
+          image: image64,
+          country: countryRef.current?.value,
+        })
+      );
     } catch (e: unknown) {
       if (e instanceof ValidationError) {
-        console.log(e.inner);
         dispatch(setValidationErrors(e.inner));
       }
     } finally {
@@ -82,7 +99,6 @@ export function UncontrolledFormPage() {
         <form
           action=""
           onSubmit={(e) => {
-            console.log('submit');
             e.preventDefault();
             handleSubmit();
           }}

@@ -4,6 +4,7 @@ export default function InputGender(
   props: Record<'genderRef', MutableRefObject<HTMLInputElement | null>>
 ) {
   const { genderRef } = props;
+
   return (
     <fieldset>
       <legend>Gender: </legend>

@@ -19,3 +19,12 @@ export async function showPasswordStrength(password: string): Promise<number> {
     return 0;
   }
 }
+
+export const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result?.toString() || '');
+    reader.onerror = (error) => reject(error);
+  });
+};

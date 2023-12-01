@@ -1,6 +1,5 @@
 import { object, string, number, boolean, ref, mixed } from 'yup';
 import { store } from '../redux/store/store';
-import { File } from './types';
 
 const countriesList = store.getState().countries.countries;
 
@@ -34,7 +33,7 @@ export const validationSchema = object({
     .oneOf([ref('password')], 'Passwords must match'),
   gender: string().required(),
   accept: boolean().oneOf([true], 'You must accept T&C'),
-  image: mixed<File>()
+  image: mixed<FileList>()
     .test('extension', 'Image is required', (value) => {
       return value?.length == 1;
     })

@@ -1,42 +1,31 @@
-import { useState } from 'react';
+import { MutableRefObject, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store/store';
-
-import { Register, SetValue, SetError } from '../../utils/types';
+import { RootState } from '../../../redux/store/store';
 
 interface Props {
+  inputRef: MutableRefObject<HTMLInputElement | null>;
   countriesFilteredVisible: boolean;
   setCountriesFilteredVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  register: Register;
-  watchCountry: string | undefined;
-  setValue: SetValue;
-  error: string | undefined;
-  setError: SetError;
 }
 
 export default function InputCountry(props: Props) {
-  const {
-    register,
-    watchCountry,
-    setValue,
-    error,
-    setError,
-    countriesFilteredVisible,
-    setCountriesFilteredVisible,
-  } = props;
+  const { inputRef, countriesFilteredVisible, setCountriesFilteredVisible } =
+    props;
 
   const counriesAll = useSelector(
     (state: RootState) => state.countries.countries
   );
+  const errorCountry = useSelector((state: RootState) => state.error.country);
 
-  const countryRegister = register('country');
   const [countriesFiltered, setCountriesFiltered] = useState<string[]>([]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = () => {
     setCountriesFilteredVisible(true);
     setCountriesFiltered(
       counriesAll.filter((country) =>
-        country.toLowerCase().startsWith(e.target.value?.toLowerCase() || '')
+        country
+          .toLowerCase()
+          .startsWith(inputRef.current?.value?.toLowerCase() || '')
       )
     );
   };
@@ -48,30 +37,26 @@ export default function InputCountry(props: Props) {
         type="text"
         id="country"
         className="bg-red-600"
-        {...countryRegister}
-        onChange={(e) => {
-          countryRegister.onChange(e);
-          handleChange(e);
-        }}
+        autoFocus
+        ref={inputRef}
+        onChange={handleChange}
         onFocus={() => setCountriesFilteredVisible(true)}
       />
       {countriesFilteredVisible &&
-        watchCountry &&
         countriesFiltered.map((country) => (
           <label
             htmlFor="country"
             key={country}
-            className="flex flex-col"
+            className="flex flex-col cursor-pointer"
             onClick={() => {
-              setValue('country', country);
-              setError('country', { type: 'no-error', message: '' });
+              if (inputRef.current) inputRef.current.value = country;
               setCountriesFiltered([]);
             }}
           >
             {country}
           </label>
         ))}
-      <p>{error ? error : ''}</p>
+      <p>{errorCountry ? errorCountry : ''}</p>
     </fieldset>
   );
 }

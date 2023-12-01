@@ -1,7 +1,8 @@
-import { FormHookProps } from '../../utils/types';
+import { FormHookProps } from '../../../utils/types';
 
 export default function InputAge(props: FormHookProps) {
   const { register, error } = props;
+
   return (
     <fieldset>
       <label htmlFor="age">Age:</label>
