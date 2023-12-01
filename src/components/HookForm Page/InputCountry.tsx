@@ -5,6 +5,8 @@ import { RootState } from '../../redux/store/store';
 import { Register, SetValue, SetError } from '../../utils/types';
 
 interface Props {
+  countriesFilteredVisible: boolean;
+  setCountriesFilteredVisible: React.Dispatch<React.SetStateAction<boolean>>;
   register: Register;
   watchCountry: string | undefined;
   setValue: SetValue;
@@ -13,7 +15,15 @@ interface Props {
 }
 
 export default function InputCountry(props: Props) {
-  const { register, watchCountry, setValue, error, setError } = props;
+  const {
+    register,
+    watchCountry,
+    setValue,
+    error,
+    setError,
+    countriesFilteredVisible,
+    setCountriesFilteredVisible,
+  } = props;
 
   const counriesAll = useSelector(
     (state: RootState) => state.countries.countries
@@ -21,27 +31,18 @@ export default function InputCountry(props: Props) {
 
   const countryRegister = register('country');
   const [countriesFiltered, setCountriesFiltered] = useState<string[]>([]);
-  const [countriesFilteredVisible, setCountriesFilteredVisible] =
-    useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCountriesFilteredVisible(true);
     setCountriesFiltered(
       counriesAll.filter((country) =>
         country.toLowerCase().startsWith(e.target.value?.toLowerCase() || '')
       )
     );
   };
-  console.log(error);
 
   return (
-    <fieldset
-      onMouseEnter={() => {
-        setCountriesFilteredVisible(true);
-      }}
-      onMouseLeave={() => {
-        setCountriesFilteredVisible(false);
-      }}
-    >
+    <fieldset>
       <label htmlFor="country">Country:</label>
       <input
         type="text"
@@ -52,6 +53,7 @@ export default function InputCountry(props: Props) {
           countryRegister.onChange(e);
           handleChange(e);
         }}
+        onFocus={() => setCountriesFilteredVisible(true)}
       />
       {countriesFilteredVisible &&
         watchCountry &&

@@ -2,10 +2,14 @@ import { MutableRefObject, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store/store';
 
-export default function InputCountry(
-  props: Record<'inputRef', MutableRefObject<HTMLInputElement | null>>
-) {
-  const { inputRef } = props;
+interface Props {
+  inputRef: MutableRefObject<HTMLInputElement | null>;
+  countriesFilteredVisible: boolean;
+  setCountriesFilteredVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export default function InputCountry(props: Props) {
+  const { inputRef, countriesFilteredVisible, setCountriesFilteredVisible } =
+    props;
 
   const counriesAll = useSelector(
     (state: RootState) => state.countries.countries
@@ -13,10 +17,9 @@ export default function InputCountry(
   const errorCountry = useSelector((state: RootState) => state.error.country);
 
   const [countriesFiltered, setCountriesFiltered] = useState<string[]>([]);
-  const [countriesFilteredVisible, setCountriesFilteredVisible] =
-    useState(false);
 
   const handleChange = () => {
+    setCountriesFilteredVisible(true);
     setCountriesFiltered(
       counriesAll.filter((country) =>
         country
@@ -27,14 +30,7 @@ export default function InputCountry(
   };
 
   return (
-    <fieldset
-      onMouseEnter={() => {
-        setCountriesFilteredVisible(true);
-      }}
-      onMouseLeave={() => {
-        setCountriesFilteredVisible(false);
-      }}
-    >
+    <fieldset>
       <label htmlFor="country">Country:</label>
       <input
         type="text"
@@ -43,6 +39,7 @@ export default function InputCountry(
         autoFocus
         ref={inputRef}
         onChange={handleChange}
+        onFocus={() => setCountriesFilteredVisible(true)}
       />
       {countriesFilteredVisible &&
         countriesFiltered.map((country) => (

@@ -31,6 +31,8 @@ export function UncontrolledFormPage() {
   const countryRef = useRef<HTMLInputElement>(null);
 
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [countriesFilteredVisible, setCountriesFilteredVisible] =
+    useState(false);
 
   const dispatch = useDispatch();
 
@@ -67,10 +69,16 @@ export function UncontrolledFormPage() {
 
   return (
     <>
-      <header>
+      <header onClick={() => setCountriesFilteredVisible(false)}>
         <Link to="/">Back to Main page</Link>
       </header>
-      <main>
+      <main
+        onClick={(e) => {
+          if (e.target !== countryRef.current) {
+            setCountriesFilteredVisible(false);
+          }
+        }}
+      >
         <form
           action=""
           onSubmit={(e) => {
@@ -90,7 +98,11 @@ export function UncontrolledFormPage() {
           <InputGender genderRef={genderRef} />
           <InputAccept inputRef={acceptRef} />
           <InputImage inputRef={imageRef} />
-          <InputCountry inputRef={countryRef} />
+          <InputCountry
+            inputRef={countryRef}
+            countriesFilteredVisible={countriesFilteredVisible}
+            setCountriesFilteredVisible={setCountriesFilteredVisible}
+          />
           <button type="submit">Submit</button>
         </form>
       </main>

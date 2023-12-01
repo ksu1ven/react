@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {
@@ -26,6 +27,9 @@ export function HookFormPage() {
     resolver: yupResolver(validationSchema),
   });
 
+  const [countriesFilteredVisible, setCountriesFilteredVisible] =
+    useState(false);
+
   const onSubmit = (data: unknown) => {
     alert(JSON.stringify(data));
   };
@@ -35,10 +39,14 @@ export function HookFormPage() {
 
   return (
     <>
-      <header>
+      <header onClick={() => setCountriesFilteredVisible(false)}>
         <Link to="/">Back to Main page</Link>
       </header>
-      <main>
+      <main
+        onClick={(e) => {
+          setCountriesFilteredVisible(false);
+        }}
+      >
         <form action="" onSubmit={handleSubmit(onSubmit, onError)}>
           <InputName register={register} error={errors.name?.message} />
           <InputAge register={register} error={errors.age?.message} />
@@ -55,6 +63,8 @@ export function HookFormPage() {
           <InputAccept register={register} error={errors.accept?.message} />
           <InputImage register={register} error={errors.image?.message} />
           <InputCountry
+            countriesFilteredVisible={countriesFilteredVisible}
+            setCountriesFilteredVisible={setCountriesFilteredVisible}
             register={register}
             watchCountry={watch('country')}
             setValue={setValue}
