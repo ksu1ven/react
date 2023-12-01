@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   InputCountry,
@@ -17,6 +17,7 @@ import {
   setValidationErrors,
   removeValidationErrors,
 } from '../../redux/features/errorSlice';
+import { showPasswordStrength } from '../../utils/functions';
 
 export function UncontrolledFormPage() {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -24,17 +25,17 @@ export function UncontrolledFormPage() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const passwordRepeatRef = useRef<HTMLInputElement>(null);
-  const maleRef = useRef<HTMLInputElement>(null);
-  const femaleRef = useRef<HTMLInputElement>(null);
+  const genderRef = useRef<HTMLInputElement>(null);
   const acceptRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
+
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     try {
-      console.log(imageRef.current?.files);
       await validationSchema.validate(
         {
           name: nameRef.current?.value[0],
@@ -43,21 +44,24 @@ export function UncontrolledFormPage() {
           password: passwordRef.current?.value,
           passwordRepeat: passwordRepeatRef.current?.value,
           accept: acceptRef.current?.checked,
-          image: {
-            size: imageRef.current?.files?.['0']?.size || undefined,
-            type: imageRef.current?.files?.['0']?.type || undefined,
-          },
+          gender: imageRef.current?.value,
+          image: imageRef.current?.files,
+          country: countryRef.current?.value,
         },
         { abortEarly: false }
       );
       dispatch(removeValidationErrors());
     } catch (e: unknown) {
-      console.log(e);
       if (e instanceof ValidationError) {
-        // console.log(e.inner);
-        // console.log(nameRef.current?.value);
+        console.log(e.inner);
         dispatch(setValidationErrors(e.inner));
       }
+    } finally {
+      showPasswordStrength(passwordRef.current?.value || '').then(
+        (strength) => {
+          setPasswordStrength(strength);
+        }
+      );
     }
   };
 
@@ -81,8 +85,9 @@ export function UncontrolledFormPage() {
           <InputPassword
             passwordRef={passwordRef}
             passwordRepeatRef={passwordRepeatRef}
+            strength={passwordStrength}
           />
-          <InputGender maleRef={maleRef} femaleRef={femaleRef} />
+          <InputGender genderRef={genderRef} />
           <InputAccept inputRef={acceptRef} />
           <InputImage inputRef={imageRef} />
           <InputCountry inputRef={countryRef} />

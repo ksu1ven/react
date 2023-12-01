@@ -24,7 +24,8 @@ export const errorSlice = createSlice({
       }
       errors.forEach((el) => {
         const path = el.path?.split('.')[0];
-        state[path as keyof typeof initialState] = el.message;
+        if (!state[path as keyof typeof initialState])
+          state[path as keyof typeof initialState] = el.message;
       });
     },
     removeValidationErrors(state) {

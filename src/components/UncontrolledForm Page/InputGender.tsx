@@ -1,12 +1,9 @@
 import { MutableRefObject } from 'react';
 
-interface Props {
-  maleRef: MutableRefObject<HTMLInputElement | null>;
-  femaleRef: MutableRefObject<HTMLInputElement | null>;
-}
-
-export default function InputGender(props: Props) {
-  const { femaleRef, maleRef } = props;
+export default function InputGender(
+  props: Record<'genderRef', MutableRefObject<HTMLInputElement | null>>
+) {
+  const { genderRef } = props;
   return (
     <fieldset>
       <legend>Gender: </legend>
@@ -15,11 +12,18 @@ export default function InputGender(props: Props) {
         type="radio"
         id="male"
         name="gender"
-        ref={maleRef}
+        ref={genderRef}
+        value="male"
         defaultChecked
       />
       <label htmlFor="female">female</label>
-      <input type="radio" id="female" name="gender" ref={femaleRef} />
+      <input
+        type="radio"
+        id="female"
+        name="gender"
+        ref={genderRef}
+        value="female"
+      />
     </fieldset>
   );
 }
