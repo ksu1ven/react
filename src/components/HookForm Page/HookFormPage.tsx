@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { setForm } from '../../redux/features/formSlice';
+import { setForm, setNewFormAdded } from '../../redux/features/formSlice';
 import {
   InputCountry,
   InputAccept,
@@ -22,7 +22,7 @@ export function HookFormPage() {
   const {
     register,
     watch,
-    formState: { errors, isValid },
+    formState: { errors },
     handleSubmit,
     setValue,
     setError,
@@ -35,6 +35,7 @@ export function HookFormPage() {
     useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: Fields) => {
     const { name, age, email, password, gender, image, country } = data;
@@ -50,7 +51,12 @@ export function HookFormPage() {
         country,
       })
     );
+    navigate('/');
   };
+
+  useEffect(() => {
+    dispatch(setNewFormAdded(false));
+  }, [dispatch]);
 
   return (
     <>
@@ -86,9 +92,7 @@ export function HookFormPage() {
             error={errors.country?.message}
             setError={setError}
           />
-          <button type="submit" disabled={!isValid}>
-            Submit
-          </button>
+          <button type="submit">Submit</button>
         </form>
       </main>
     </>

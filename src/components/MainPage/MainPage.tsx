@@ -4,7 +4,9 @@ import type { RootState } from '../../redux/store/store';
 import { Tile } from './Tile';
 
 export function MainPage() {
-  const formTiles = useSelector((state: RootState) => state.form.formTiles);
+  const { formTiles, newFormAdded } = useSelector(
+    (state: RootState) => state.form
+  );
 
   return (
     <>
@@ -14,7 +16,11 @@ export function MainPage() {
       </header>
       <main>
         {formTiles.map((tile, index) => (
-          <Tile key={`tile-${index}`} tile={tile} />
+          <Tile
+            key={`tile-${index}`}
+            tile={tile}
+            newFormAdded={newFormAdded && index === 0 ? newFormAdded : false}
+          />
         ))}
       </main>
     </>

@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useRef, useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   InputCountry,
   InputAccept,
@@ -15,7 +15,7 @@ import {
   setValidationErrors,
   removeValidationErrors,
 } from '../../redux/features/errorSlice';
-import { setForm } from '../../redux/features/formSlice';
+import { setForm, setNewFormAdded } from '../../redux/features/formSlice';
 import { showPasswordStrength, fileToBase64 } from '../../utils/functions';
 import { validationSchema } from '../../utils/yup';
 import { ValidationError } from 'yup';
@@ -36,6 +36,7 @@ export function UncontrolledFormPage() {
     useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
@@ -71,6 +72,7 @@ export function UncontrolledFormPage() {
           country: countryRef.current?.value,
         })
       );
+      navigate('/');
     } catch (e: unknown) {
       if (e instanceof ValidationError) {
         dispatch(setValidationErrors(e.inner));
@@ -83,6 +85,10 @@ export function UncontrolledFormPage() {
       );
     }
   };
+
+  useEffect(() => {
+    dispatch(setNewFormAdded(false));
+  }, [dispatch]);
 
   return (
     <>

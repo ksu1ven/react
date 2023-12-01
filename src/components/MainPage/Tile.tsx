@@ -1,10 +1,15 @@
 import { FormData } from '../../utils/types';
 
-export function Tile(props: Record<'tile', FormData>) {
-  const { tile } = props;
+interface Props {
+  tile: FormData;
+  newFormAdded: boolean;
+}
+
+export function Tile(props: Props) {
+  const { tile, newFormAdded } = props;
 
   return (
-    <section className="flex">
+    <section className={newFormAdded ? 'flex bg-red-500' : 'flex'}>
       <img src={tile.image} className="w-20" alt="formImf" />
       <ul>
         <li>Name: {tile.name}</li>
