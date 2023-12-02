@@ -17,6 +17,7 @@ import countriesSlice from '../features/countriesSlice';
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['form'],
 };
 const rootReducer = combineReducers({
   form: formSlice,

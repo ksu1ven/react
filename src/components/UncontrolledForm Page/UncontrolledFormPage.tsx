@@ -72,7 +72,7 @@ export function UncontrolledFormPage() {
           country: countryRef.current?.value,
         })
       );
-      navigate('/');
+      setTimeout(() => navigate('/'), 1000);
     } catch (e: unknown) {
       if (e instanceof ValidationError) {
         dispatch(setValidationErrors(e.inner));
