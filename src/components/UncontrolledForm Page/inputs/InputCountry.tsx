@@ -33,30 +33,29 @@ export default function InputCountry(props: Props) {
   return (
     <fieldset>
       <label htmlFor="country">Country:</label>
-      <input
-        type="text"
-        id="country"
-        className="bg-red-600"
-        autoFocus
-        ref={inputRef}
-        onChange={handleChange}
-        onFocus={() => setCountriesFilteredVisible(true)}
-      />
-      {countriesFilteredVisible &&
-        countriesFiltered.map((country) => (
-          <label
-            htmlFor="country"
-            key={country}
-            className="flex flex-col cursor-pointer"
-            onClick={() => {
-              if (inputRef.current) inputRef.current.value = country;
-              setCountriesFiltered([]);
-            }}
-          >
-            {country}
-          </label>
-        ))}
-      <p>{errorCountry ? errorCountry : ''}</p>
+      <div className="flex flex-col w-min items-end">
+        <input
+          type="text"
+          id="country"
+          ref={inputRef}
+          onChange={handleChange}
+        />
+        {countriesFilteredVisible &&
+          countriesFiltered.map((country) => (
+            <label
+              htmlFor="country"
+              key={country}
+              className="w-full cursor-pointer bg-cyan-200 p-2 border-solid border-t border-cyan-800 text-cyan-800"
+              onClick={() => {
+                if (inputRef.current) inputRef.current.value = country;
+                setCountriesFiltered([]);
+              }}
+            >
+              {country}
+            </label>
+          ))}
+        <p className="self-start">{errorCountry ? errorCountry : ''}</p>
+      </div>
     </fieldset>
   );
 }

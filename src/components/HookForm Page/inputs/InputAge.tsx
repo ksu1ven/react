@@ -6,8 +6,10 @@ export default function InputAge(props: FormHookProps) {
   return (
     <fieldset>
       <label htmlFor="age">Age:</label>
-      <input type="text" id="age" {...register('age')} />
-      <p>{error ? error : ''}</p>
+      <div>
+        <input type="text" id="age" {...register('age')} />
+        <p>{error ? error : ''}</p>
+      </div>
     </fieldset>
   );
 }

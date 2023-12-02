@@ -11,8 +11,10 @@ export default function InputImage(
   return (
     <fieldset>
       <label htmlFor="image">Image: </label>
-      <input type="file" id="image" ref={inputRef} />
-      <p>{errorImage ? errorImage : ''}</p>
+      <div>
+        <input type="file" id="image" ref={inputRef} />
+        <p>{errorImage ? errorImage : ''}</p>
+      </div>
     </fieldset>
   );
 }

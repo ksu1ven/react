@@ -11,8 +11,10 @@ export default function InputAge(
   return (
     <fieldset>
       <label htmlFor="age">Age:</label>
-      <input type="text" id="age" ref={inputRef} />
-      <p>{errorAge ? errorAge : ''}</p>
+      <div>
+        <input type="text" id="age" ref={inputRef} />
+        <p>{errorAge ? errorAge : ''}</p>
+      </div>
     </fieldset>
   );
 }

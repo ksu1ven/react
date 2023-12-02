@@ -10,8 +10,10 @@ export default function InputEmail(
   return (
     <fieldset>
       <label htmlFor="email">Email:</label>
-      <input type="text" id="email" ref={inputRef} />
-      <p>{errorEmail ? errorEmail : ''}</p>
+      <div>
+        <input type="text" id="email" ref={inputRef} />
+        <p>{errorEmail ? errorEmail : ''}</p>
+      </div>
     </fieldset>
   );
 }

@@ -60,15 +60,31 @@ export function HookFormPage() {
 
   return (
     <>
-      <header onClick={() => setCountriesFilteredVisible(false)}>
-        <Link to="/">Back to Main page</Link>
+      <header
+        className="bg-pink-100 p-6"
+        onClick={() => setCountriesFilteredVisible(false)}
+      >
+        <Link
+          className="bg-pink-800 px-10 py-2 border-solid border-t border-pink-200 text-pink-50"
+          to="/"
+        >
+          Back to Main page
+        </Link>
+        <h1 className="text-center text-2xl font-bold text-pink-800 uppercase">
+          React Hook Form
+        </h1>
       </header>
       <main
+        className="hook flex justify-center bg-pink-100 h-full min-h-screen"
         onClick={() => {
           setCountriesFilteredVisible(false);
         }}
       >
-        <form action="" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col h-fit w-1/2 bg-pink-400 p-5 rounded-md"
+          action=""
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <InputName register={register} error={errors.name?.message} />
           <InputAge register={register} error={errors.age?.message} />
           <InputEmail register={register} error={errors.email?.message} />
@@ -92,7 +108,12 @@ export function HookFormPage() {
             error={errors.country?.message}
             setError={setError}
           />
-          <button type="submit">Submit</button>
+          <button
+            className="self-center w-fit bg-pink-800 px-10 py-2 border-solid border-t border-pink-200 text-pink-50 rounded"
+            type="submit"
+          >
+            Submit
+          </button>
         </form>
       </main>
     </>

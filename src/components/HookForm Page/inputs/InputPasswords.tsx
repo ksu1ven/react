@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { FormHookPasswordsProps } from '../../../utils/types';
 import { showPasswordStrength } from '../../../utils/functions';
+import starEmpty from '../../../assets/silver-star-empty.png';
+import starFull from '../../../assets/silver-star-full.png';
 
 export default function InputPassword(props: FormHookPasswordsProps) {
   const {
@@ -10,6 +12,10 @@ export default function InputPassword(props: FormHookPasswordsProps) {
   } = props;
 
   const [strength, setStrength] = useState(0);
+  const starsArr = new Array(4).fill(false).map((_, ind) => {
+    if (ind < strength) return true;
+    return false;
+  });
 
   useEffect(() => {
     if (watchPassword)
@@ -19,21 +25,55 @@ export default function InputPassword(props: FormHookPasswordsProps) {
   }, [watchPassword]);
 
   return (
-    <fieldset>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input type="text" id="password" {...register('password')} />
-        <p>{errorPassword ? errorPassword : ''}</p>
-
-        <label htmlFor="password-repeat">Repeat password:</label>
-        <input
-          type="text"
-          id="password-repeat"
-          {...register('passwordRepeat')}
-        />
-        <p>{errorPasswordRepeat ? errorPasswordRepeat : ''}</p>
+    <fieldset className="w-full">
+      <div className="flex flex-col w-9/12">
+        <div className="flex justify-between">
+          <label htmlFor="password">Password:</label>
+          <div>
+            <input type="text" id="password" {...register('password')} />
+            <p>{errorPassword ? errorPassword : ''}</p>
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <label htmlFor="password-repeat">Repeat password:</label>
+          <div>
+            <input
+              type="text"
+              id="password-repeat"
+              {...register('passwordRepeat')}
+            />
+            <p>{errorPasswordRepeat ? errorPasswordRepeat : ''}</p>
+          </div>
+        </div>
       </div>
-      {strength ? <div>Strength: {strength} of 4</div> : <></>}
+      {strength > 0 ? (
+        <div className="text-cyan-50 flex flex-col">
+          Strength:
+          <div className="flex">
+            {starsArr.map((el, ind) => {
+              if (el)
+                return (
+                  <img
+                    key={`star-${ind}`}
+                    src={starFull}
+                    alt="star-full"
+                    className="w-6 h-6"
+                  />
+                );
+              return (
+                <img
+                  key={`star-${ind}`}
+                  src={starEmpty}
+                  alt="star-full"
+                  className="w-6 h-6"
+                />
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </fieldset>
   );
 }

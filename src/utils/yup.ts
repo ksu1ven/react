@@ -6,8 +6,7 @@ const countriesList = store.getState().countries.countries;
 export const validationSchema = object({
   name: string()
     .required('This is a required field')
-    .strict(true)
-    .uppercase('Name must begin with a capital letter'),
+    .matches(/^[A-ZА-Я].*$/, 'Name must begin with a capital letter'),
 
   age: number()
     .required('This is a required field')

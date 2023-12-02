@@ -11,8 +11,10 @@ export default function InputName(
   return (
     <fieldset>
       <label htmlFor="name">Name:</label>
-      <input type="text" id="name" ref={inputRef} />
-      <p>{errorName ? errorName : ''}</p>
+      <div>
+        <input type="text" id="name" ref={inputRef} />
+        <p>{errorName ? errorName : ''}</p>
+      </div>
     </fieldset>
   );
 }

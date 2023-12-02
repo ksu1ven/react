@@ -6,8 +6,10 @@ export default function InputName(props: FormHookProps) {
   return (
     <fieldset>
       <label htmlFor="name">Name:</label>
-      <input type="text" id="name" {...register('name')} />
-      <p>{error ? error : ''}</p>
+      <div>
+        <input type="text" id="name" {...register('name')} />
+        <p>{error ? error : ''}</p>
+      </div>
     </fieldset>
   );
 }

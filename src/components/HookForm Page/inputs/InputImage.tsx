@@ -6,8 +6,10 @@ export default function InputImage(props: FormHookProps) {
   return (
     <fieldset>
       <label htmlFor="image">Image: </label>
-      <input type="file" id="image" {...register('image')} />
-      <p>{error ? error : ''}</p>
+      <div>
+        <input type="file" id="image" {...register('image')} />
+        <p>{error ? error : ''}</p>
+      </div>
     </fieldset>
   );
 }

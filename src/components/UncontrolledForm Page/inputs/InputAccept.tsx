@@ -9,10 +9,12 @@ export default function InputAccept(
   const errorAccept = useSelector((state: RootState) => state.error.accept);
 
   return (
-    <fieldset>
-      <label htmlFor="accept">accept T&C </label>
-      <input type="checkbox" id="accept" ref={inputRef} />
-      <p>{errorAccept ? errorAccept : ''}</p>
+    <fieldset className="justify-start gap-x-16">
+      <label htmlFor="accept">Accept T&C </label>
+      <div>
+        <input type="checkbox" id="accept" ref={inputRef} />
+        <p>{errorAccept ? errorAccept : ''}</p>
+      </div>
     </fieldset>
   );
 }

@@ -92,10 +92,25 @@ export function UncontrolledFormPage() {
 
   return (
     <>
-      <header onClick={() => setCountriesFilteredVisible(false)}>
-        <Link to="/">Back to Main page</Link>
+      <header
+        className="bg-cyan-100 p-6"
+        onClick={() => setCountriesFilteredVisible(false)}
+      >
+        <Link
+          to="/"
+          className="bg-cyan-800 px-10 py-2 border-solid border-t border-cyan-200 text-cyan-50"
+          onClick={() => {
+            dispatch(removeValidationErrors());
+          }}
+        >
+          Back to Main page
+        </Link>
+        <h1 className="text-center text-2xl font-bold text-cyan-800 uppercase">
+          Uncontrolled form
+        </h1>
       </header>
       <main
+        className="uncontrolled flex justify-center bg-cyan-100 h-full min-h-screen"
         onClick={(e) => {
           if (e.target !== countryRef.current) {
             setCountriesFilteredVisible(false);
@@ -103,6 +118,7 @@ export function UncontrolledFormPage() {
         }}
       >
         <form
+          className="flex flex-col h-fit w-1/2 bg-cyan-500 p-5 rounded-md"
           action=""
           onSubmit={(e) => {
             e.preventDefault();
@@ -125,7 +141,12 @@ export function UncontrolledFormPage() {
             countriesFilteredVisible={countriesFilteredVisible}
             setCountriesFilteredVisible={setCountriesFilteredVisible}
           />
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            className="self-center w-fit bg-cyan-800 px-10 py-2 border-solid border-t border-cyan-200 text-cyan-50 rounded"
+          >
+            Submit
+          </button>
         </form>
       </main>
     </>
