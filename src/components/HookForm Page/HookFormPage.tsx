@@ -59,7 +59,12 @@ export function HookFormPage() {
   }, [dispatch]);
 
   return (
-    <>
+    <main
+      className="h-full min-h-screen bg-pink-100 pb-10"
+      onClick={() => {
+        setCountriesFilteredVisible(false);
+      }}
+    >
       <header
         className="bg-pink-100 p-6"
         onClick={() => setCountriesFilteredVisible(false)}
@@ -74,12 +79,7 @@ export function HookFormPage() {
           React Hook Form
         </h1>
       </header>
-      <main
-        className="hook flex justify-center bg-pink-100 h-full min-h-screen"
-        onClick={() => {
-          setCountriesFilteredVisible(false);
-        }}
-      >
+      <section className="hook flex justify-center">
         <form
           className="flex flex-col h-fit w-1/2 bg-pink-400 p-5 rounded-md"
           action=""
@@ -116,8 +116,8 @@ export function HookFormPage() {
             Submit
           </button>
         </form>
-      </main>
-    </>
+      </section>
+    </main>
   );
 }
 

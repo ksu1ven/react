@@ -91,7 +91,14 @@ export function UncontrolledFormPage() {
   }, [dispatch]);
 
   return (
-    <>
+    <main
+      className="h-full min-h-screen bg-cyan-100 pb-10"
+      onClick={(e) => {
+        if (e.target !== countryRef.current) {
+          setCountriesFilteredVisible(false);
+        }
+      }}
+    >
       <header
         className="bg-cyan-100 p-6"
         onClick={() => setCountriesFilteredVisible(false)}
@@ -109,14 +116,7 @@ export function UncontrolledFormPage() {
           Uncontrolled form
         </h1>
       </header>
-      <main
-        className="uncontrolled flex justify-center bg-cyan-100 h-full min-h-screen"
-        onClick={(e) => {
-          if (e.target !== countryRef.current) {
-            setCountriesFilteredVisible(false);
-          }
-        }}
-      >
+      <section className="uncontrolled flex justify-center">
         <form
           className="flex flex-col h-fit w-1/2 bg-cyan-500 p-5 rounded-md"
           action=""
@@ -148,8 +148,8 @@ export function UncontrolledFormPage() {
             Submit
           </button>
         </form>
-      </main>
-    </>
+      </section>
+    </main>
   );
 }
 

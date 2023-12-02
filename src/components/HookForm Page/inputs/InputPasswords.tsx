@@ -28,7 +28,7 @@ export default function InputPassword(props: FormHookPasswordsProps) {
   }, [watchPassword]);
 
   return (
-    <fieldset className="w-full">
+    <fieldset className="w-full  gap-10">
       <div className="flex flex-col w-9/12">
         <div className="flex justify-between">
           <label htmlFor="password">Password:</label>
@@ -68,7 +68,7 @@ export default function InputPassword(props: FormHookPasswordsProps) {
         </div>
       </div>
       {strength > 0 ? (
-        <div className="text-cyan-50 flex flex-col">
+        <div className="grow text-pink-50 flex flex-col">
           Strength:
           <div className="flex">
             {starsArr.map((el, ind) => {

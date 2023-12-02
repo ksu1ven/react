@@ -3,10 +3,11 @@
 
 body {
   font-family: 'Cabin', sans-serif;
+  font-size: 1.2rem;
 }
 
 .uncontrolled input {
-  width: 18rem;
+  width: 24rem;
   background-color: rgb(207 250 254);
   color: rgb(21 94 117);
   padding: 0 0.5rem;
@@ -20,7 +21,7 @@ body {
 }
 
 .hook input {
-  width: 18rem;
+  width: 24rem;
   background-color: rgb(236 254 255);
   color: rgb(131 24 67);
   padding: 0 0.5rem;
