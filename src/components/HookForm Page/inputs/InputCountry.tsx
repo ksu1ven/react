@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store/store';
-import { Register, SetValue, SetError } from '../../../utils/types';
+import { Register, SetValue, Trigger } from '../../../utils/types';
 
 interface Props {
   countriesFilteredVisible: boolean;
@@ -9,8 +9,8 @@ interface Props {
   register: Register;
   watchCountry: string | undefined;
   setValue: SetValue;
+  trigger: Trigger;
   error: string | undefined;
-  setError: SetError;
 }
 
 export default function InputCountry(props: Props) {
@@ -19,9 +19,9 @@ export default function InputCountry(props: Props) {
     watchCountry,
     setValue,
     error,
-    setError,
     countriesFilteredVisible,
     setCountriesFilteredVisible,
+    trigger,
   } = props;
 
   const counriesAll = useSelector(
@@ -52,7 +52,6 @@ export default function InputCountry(props: Props) {
             countryRegister.onChange(e);
             handleChange(e);
           }}
-          onFocus={() => setCountriesFilteredVisible(true)}
         />
         {countriesFilteredVisible &&
           watchCountry &&
@@ -63,8 +62,8 @@ export default function InputCountry(props: Props) {
               className="w-full cursor-pointer bg-pink-200 p-2 border-solid border-t border-pink-800 text-pink-800"
               onClick={() => {
                 setValue('country', country);
-                setError('country', { type: 'no-error', message: '' });
                 setCountriesFiltered([]);
+                trigger('country');
               }}
             >
               {country}

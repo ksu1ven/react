@@ -1,8 +1,10 @@
-import { MutableRefObject } from 'react';
+import { MutableRefObject, useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../redux/store/store';
 import starEmpty from '../../../assets/silver-star-empty.png';
 import starFull from '../../../assets/silver-star-full.png';
+import eyeClosed from '../../../assets/eye-closed.png';
+import eyeOpened from '../../../assets/eye-open.png';
 
 interface Props {
   passwordRef: MutableRefObject<HTMLInputElement | null>;
@@ -20,21 +22,40 @@ export default function InputPassword(props: Props) {
     if (ind < strength) return true;
     return false;
   });
+  const [passwordType, setPasswordType] = useState('password');
 
   return (
     <fieldset className="w-full">
       <div className="flex flex-col w-9/12">
         <div className="flex justify-between">
           <label htmlFor="password">Password:</label>
-          <div>
-            <input type="text" id="password" ref={passwordRef} />
+          <div className="relative">
+            <input type={passwordType} id="password" ref={passwordRef} />
+            <button
+              type="button"
+              className="absolute top-1 right-2 w-6 z-10"
+              onClick={() =>
+                setPasswordType(
+                  passwordType === 'password' ? 'text' : 'password'
+                )
+              }
+            >
+              <img
+                src={passwordType === 'password' ? eyeClosed : eyeOpened}
+                alt="password-type"
+              />
+            </button>
             <p>{errorPassword ? errorPassword : ''}</p>
           </div>
         </div>
         <div className="flex justify-between">
           <label htmlFor="password-repeat">Repeat password:</label>
           <div>
-            <input type="text" id="password-repeat" ref={passwordRepeatRef} />
+            <input
+              type={passwordType}
+              id="password-repeat"
+              ref={passwordRepeatRef}
+            />
             <p>{errorPasswordRepeat ? errorPasswordRepeat : ''}</p>
           </div>
         </div>

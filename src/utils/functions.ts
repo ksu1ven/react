@@ -13,7 +13,6 @@ export async function showPasswordStrength(password: string): Promise<number> {
     return maxStrength;
   } catch (e) {
     if (e instanceof ValidationError) {
-      console.log(e.inner);
       return maxStrength - e.inner.length;
     }
     return 0;

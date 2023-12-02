@@ -22,10 +22,10 @@ export function HookFormPage() {
   const {
     register,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
     setValue,
-    setError,
+    trigger,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(validationSchema),
@@ -106,11 +106,12 @@ export function HookFormPage() {
             watchCountry={watch('country')}
             setValue={setValue}
             error={errors.country?.message}
-            setError={setError}
+            trigger={trigger}
           />
           <button
-            className="self-center w-fit bg-pink-800 px-10 py-2 border-solid border-t border-pink-200 text-pink-50 rounded"
+            className="self-center w-fit bg-pink-800 px-10 py-2 border-solid border-t border-pink-200 text-pink-50 rounded disabled:opacity-50"
             type="submit"
+            disabled={!isValid}
           >
             Submit
           </button>

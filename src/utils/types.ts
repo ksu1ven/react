@@ -1,7 +1,7 @@
 import {
   UseFormRegister,
   UseFormSetValue,
-  UseFormSetError,
+  UseFormTrigger,
 } from 'react-hook-form';
 
 export type FormData = {
@@ -28,7 +28,7 @@ export type Fields = {
 
 export type Register = UseFormRegister<Fields>;
 export type SetValue = UseFormSetValue<Fields>;
-export type SetError = UseFormSetError<Fields>;
+export type Trigger = UseFormTrigger<Fields>;
 
 export type FormHookProps = {
   register: Register;
